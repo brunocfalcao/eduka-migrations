@@ -1,0 +1,42 @@
+{
+    "name": "brunocfalcao/eduka-migrations",
+    "description": "Eduka migrations",
+    "keywords": [
+        "brunocfalcao"
+    ],
+    "homepage": "https://github.com/brunocfalcao/eduka-migrations",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Bruno Falcão",
+            "email": "bruno.c.falcao@brunofalcao.me",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "doctrine/dbal": "^3.5",
+        "illuminate/contracts": "^9.0",
+        "brunocfalcao/eduka-abstracts": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Eduka\\Migrations\\": "src/",
+            "Eduka\\Database\\Factories\\": "database/factories/",
+            "Eduka\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-eduka-migrationss": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Eduka\\Migrations\\MigrationsServiceProvider"
+            ]
+        }
+    }
+}
