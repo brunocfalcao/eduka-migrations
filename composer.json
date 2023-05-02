@@ -17,7 +17,7 @@
     "require": {
         "php": "^8.0",
         "doctrine/dbal": "^3.5",
-        "illuminate/contracts": "^9.0",
+        "illuminate/contracts": "^10.0",
         "brunocfalcao/eduka-abstracts": "dev-master"
     },
     "autoload": {
