@@ -404,6 +404,16 @@ class CreateEdukaSchema extends Migration
             $table->softDeletes();
         });
 
+        Schema::create('subscribers', function (Blueprint $table) {
+            $table->id();
+
+            $table->foreignId('course_id');
+            $table->string('email');
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
         // Run initial framework schema seeder.
         $seeder = new InitialSchemaSeeder();
         $seeder->run();
