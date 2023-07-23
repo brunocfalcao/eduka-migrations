@@ -336,6 +336,10 @@ class CreateEdukaSchema extends Migration
                   ->nullable()
                   ->comment('The date where the course was/will be launched');
 
+            $table->string('payment_provider_product_id')
+                ->nullable()
+                ->comment('product id of the current payment provider. eg: lemon squeezy, stripe etc');
+
             $table->softDeletes();
             $table->timestamps();
         });
