@@ -418,6 +418,22 @@ class CreateEdukaSchema extends Migration
             $table->softDeletes();
         });
 
+        Schema::create('coupons', function (Blueprint $table) {
+            $table->id();
+
+            $table->string('code')->unique();
+            $table->decimal('discount_amount');
+            $table->boolean('is_flat_discount')->default(true);
+            $table->string('remote_reference_id')->nullable()->comment('coupon id in lemon squeezy or equivalent');
+            $table->string('country_iso_code')->nullable();
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+
+
+
         // Run initial framework schema seeder.
         $seeder = new InitialSchemaSeeder();
         $seeder->run();
