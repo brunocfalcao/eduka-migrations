@@ -340,6 +340,11 @@ class CreateEdukaSchema extends Migration
                 ->nullable()
                 ->comment('product id of the current payment provider. eg: lemon squeezy, stripe etc');
 
+            $table->string('payment_provider_store_id')
+                ->nullable()
+                ->comment('store id of the current payment provider. eg: lemon squeezy, stripe etc');
+
+            $table->decimal('course_price',8,2)->comment('Do not use cents. For 100$ course, use 100.')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -426,10 +431,27 @@ class CreateEdukaSchema extends Migration
             $table->boolean('is_flat_discount')->default(true);
             $table->string('remote_reference_id')->nullable()->comment('coupon id in lemon squeezy or equivalent');
             $table->string('country_iso_code')->nullable();
+            $table->string('coupon_code_template')
+                ->comment("The template provides a way to create coupons in a specific pattern.")
+                ->nullable();
 
             $table->timestamps();
             $table->softDeletes();
         });
+
+
+        Schema::create('orders', function (Blueprint $table) {
+            $table->id();
+
+            $table->integer('user_id');
+            $table->integer('course_id');
+            $table->text('response_body')->nullable();
+            // @todo break down everything from response body
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
 
 
 
