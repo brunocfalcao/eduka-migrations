@@ -345,6 +345,8 @@ class CreateEdukaSchema extends Migration
                 ->comment('store id of the current payment provider. eg: lemon squeezy, stripe etc');
 
             $table->decimal('course_price',8,2)->comment('Do not use cents. For 100$ course, use 100.')->nullable();
+            $table->boolean('enable_purchase_power_parity')->default(false);
+
             $table->softDeletes();
             $table->timestamps();
         });
@@ -435,6 +437,7 @@ class CreateEdukaSchema extends Migration
                 ->comment("The template provides a way to create coupons in a specific pattern.")
                 ->nullable();
 
+            $table->foreignId('course_id');
             $table->timestamps();
             $table->softDeletes();
         });
