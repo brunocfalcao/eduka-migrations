@@ -38,5 +38,7 @@
                 "Eduka\\Migrations\\MigrationsServiceProvider"
             ]
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
