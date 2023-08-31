@@ -344,7 +344,7 @@ class CreateEdukaSchema extends Migration
                 ->nullable()
                 ->comment('store id of the current payment provider. eg: lemon squeezy, stripe etc');
 
-            $table->decimal('course_price',8,2)->comment('Do not use cents. For 100$ course, use 100.')->nullable();
+            $table->decimal('course_price', 8, 2)->comment('Do not use cents. For 100$ course, use 100.')->nullable();
             $table->boolean('enable_purchase_power_parity')->default(false);
 
             $table->softDeletes();
@@ -434,14 +434,13 @@ class CreateEdukaSchema extends Migration
             $table->string('remote_reference_id')->nullable()->comment('coupon id in lemon squeezy or equivalent');
             $table->string('country_iso_code')->nullable();
             $table->string('coupon_code_template')
-                ->comment("The template provides a way to create coupons in a specific pattern.")
+                ->comment('The template provides a way to create coupons in a specific pattern.')
                 ->nullable();
 
             $table->foreignId('course_id');
             $table->timestamps();
             $table->softDeletes();
         });
-
 
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
@@ -454,10 +453,6 @@ class CreateEdukaSchema extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-
-
-
-
 
         // Run initial framework schema seeder.
         $seeder = new InitialSchemaSeeder();

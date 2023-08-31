@@ -25,9 +25,16 @@ class InitialSchemaSeeder extends Seeder
             'provider_namespace' => 'MasteringNova\\MasteringNovaServiceProvider',
         ]);
 
-        $domain = Domain::create([
-            'suffix' => 'masteringnova.local',
-            'course_id' => $course->id,
-        ]);
+        if (app()->environment() != 'production') {
+            $domain = Domain::create([
+                'suffix' => 'masteringnova.local',
+                'course_id' => $course->id,
+            ]);
+        } else {
+            $domain = Domain::create([
+                'suffix' => 'nova-advanced-ui.com',
+                'course_id' => $course->id,
+            ]);
+        }
     }
 }
