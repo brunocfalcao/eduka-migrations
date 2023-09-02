@@ -25,6 +25,10 @@ class InitialSchemaSeeder extends Seeder
             'provider_namespace' => 'MasteringNova\\MasteringNovaServiceProvider',
         ]);
 
+        /**
+         * Just hard-coded for testing purposes. Later on we will need to
+         * add the course via the Nova admin.
+         */
         if (app()->environment() != 'production') {
             $domain = Domain::create([
                 'suffix' => 'masteringnova.local',
