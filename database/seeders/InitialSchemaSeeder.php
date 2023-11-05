@@ -19,9 +19,9 @@ class InitialSchemaSeeder extends Seeder
          */
         $course = Course::create([
             'name' => 'Mastering Nova',
-            'admin_name' => 'Bruno',
-            'admin_email' => 'bruno@masteringnova.com',
-            'twitter_handle' => 'brunocfalcao',
+            'admin_name' => 'Bruno Falcao',
+            'admin_email' => env('MASTERING_NOVA_EMAIL'),
+            'twitter_handle' => env('MASTERING_NOVA_TWITTER'),
             'provider_namespace' => 'MasteringNova\\MasteringNovaServiceProvider',
         ]);
 
