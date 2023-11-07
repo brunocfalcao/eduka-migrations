@@ -450,6 +450,19 @@ class CreateEdukaSchema extends Migration
             $table->text('response_body')->nullable();
             // @todo break down everything from response body
 
+            $table->string('remote_reference_order_id')->nullable()->comment('should not be nullable.the order id that was created on 3rd party payment provider. eg: lemon squeezy');
+            $table->string('remote_reference_customer_id')->nullable()->comment('should not be nullable.the customer id that was created on 3rd party payment provider. eg: lemon squeezy');
+            $table->string('remote_reference_order_attribute_id')->nullable()->comment('should not be nullable.the payload.data.attributes.id that was created on 3rd party payment provider. eg: lemon squeezy, 5688a31e-cf51-4fa8-8615-c52c54327e4e');
+
+            $table->string('currency_id')->nullable();
+            $table->string('remote_reference_payment_status')->nullable();
+            $table->timestamp('refunded_at')->nullable()->comment('nullable means it was not refunded');
+
+            $table->integer('tax')->default(0)->comment('in cents');
+            $table->integer('discount_total')->default(0)->comment('in cents');
+            $table->integer('subtotal')->default(0)->comment('in cents');
+            $table->integer('total')->default(0)->comment('in cents');
+
             $table->timestamps();
             $table->softDeletes();
         });
