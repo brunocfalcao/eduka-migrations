@@ -347,8 +347,8 @@ class CreateEdukaSchema extends Migration
             $table->decimal('course_price', 8, 2)->comment('Do not use cents. For 100$ course, use 100.')->nullable();
             $table->boolean('enable_purchase_power_parity')->default(false);
 
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         /**
@@ -367,8 +367,8 @@ class CreateEdukaSchema extends Migration
                   ->nullable()
                   ->comment('The related course instance');
 
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         /**
@@ -438,6 +438,7 @@ class CreateEdukaSchema extends Migration
                 ->nullable();
 
             $table->foreignId('course_id');
+
             $table->timestamps();
             $table->softDeletes();
         });
