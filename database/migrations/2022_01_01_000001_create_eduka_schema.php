@@ -137,7 +137,7 @@ class CreateEdukaSchema extends Migration
             $table->uuid('uuid')
                 ->nullable()
                 ->unique()
-                ->comment('The url suffix to direct link this video. Unique identifier');
+                ->comment('The url uuid to direct link this video. Unique identifier');
 
             $table->boolean('is_visible')
                 ->default(false)
@@ -263,8 +263,8 @@ class CreateEdukaSchema extends Migration
         Schema::create('domains', function (Blueprint $table) {
             $table->id();
 
-            $table->string('suffix')
-                ->comment('Domain url suffix, without HTTP preffix neither "www.". E.g.: "cnn.com"');
+            $table->string('name')
+                ->comment('Domain name, without HTTP preffix neither "www.". E.g.: "cnn.com"');
 
             $table->foreignId('course_id')
                 ->nullable()
