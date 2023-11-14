@@ -203,6 +203,10 @@ class CreateEdukaSchema extends Migration
             $table->string('name')
                 ->comment('Course marketing name');
 
+            $table->string('canonical')
+                  ->required()
+                  ->unique();
+
             $table->string('meta_description')
                 ->nullable()
                 ->comment('A bit more information about the course');
@@ -239,9 +243,9 @@ class CreateEdukaSchema extends Migration
                 ->nullable()
                 ->comment('The date where the course was/will be launched');
 
-            $table->string('payment_provider_product_id')
+            $table->string('payment_provider_variant_id')
                 ->nullable()
-                ->comment('product id of the current payment provider. eg: lemon squeezy, stripe etc');
+                ->comment('product id of the current payment provider. eg: lemon squeezy (variant id), stripe etc');
 
             $table->string('payment_provider_store_id')
                 ->nullable()
