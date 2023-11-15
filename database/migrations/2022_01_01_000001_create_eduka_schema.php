@@ -254,6 +254,7 @@ class CreateEdukaSchema extends Migration
             $table->decimal('course_price', 8, 2)->comment('Do not use cents. For 100$ course, use 100.')->nullable();
             $table->boolean('enable_purchase_power_parity')->default(false);
 
+            $table->string('vimeo_project_id')->nullable()->comment('folder id');
             $table->timestamps();
             $table->softDeletes();
         });
