@@ -126,7 +126,7 @@ class CreateEdukaSchema extends Migration
                 ->nullable()
                 ->comment('More information about this video');
 
-            $table->unsignedInteger('vimeo_id')
+            $table->string('vimeo_id')
                 ->nullable()
                 ->comment('Vimeo video related id');
 
@@ -380,6 +380,7 @@ class CreateEdukaSchema extends Migration
             $table->foreignId('video_id');
             $table->string('vimeo_id')->nullable()->comment('vimeo_ids are videos/1234');
             $table->string('backblaze_id')->nullable();
+            $table->string('path_on_disk')->nullable();
             $table->timestamps();
         });
 
