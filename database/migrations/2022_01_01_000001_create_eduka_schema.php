@@ -375,7 +375,7 @@ class CreateEdukaSchema extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('video_storages', function(Blueprint $table) {
+        Schema::create('video_storages', function (Blueprint $table) {
             $table->id();
             $table->foreignId('video_id');
             $table->string('vimeo_id')->nullable()->comment('vimeo_ids are videos/1234');
