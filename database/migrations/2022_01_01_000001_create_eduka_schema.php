@@ -235,6 +235,10 @@ class CreateEdukaSchema extends Migration
                 ->nullable()
                 ->comment("Service provider namespace. E.g.: 'MasteringNova\\MasteringNovaServiceProvider'");
 
+            $table->string('lemonsqueezy_store_id')
+                  ->required()
+                  ->comment('The LS store id, even if they are multiple variants, they will all belong to the same store');
+
             $table->boolean('is_decommissioned')
                 ->default(false)
                 ->comment('Global flag to disable a course. When a course is decommissioned, it cannot be purchased');
@@ -243,18 +247,43 @@ class CreateEdukaSchema extends Migration
                 ->nullable()
                 ->comment('The date where the course was/will be launched');
 
-            $table->string('payment_provider_variant_id')
-                ->nullable()
-                ->comment('product id of the current payment provider. eg: lemon squeezy (variant id), stripe etc');
-
-            $table->string('payment_provider_store_id')
-                ->nullable()
-                ->comment('store id of the current payment provider. eg: lemon squeezy, stripe etc');
-
-            $table->decimal('course_price', 8, 2)->comment('Do not use cents. For 100$ course, use 100.')->nullable();
             $table->boolean('enable_purchase_power_parity')->default(false);
 
             $table->string('vimeo_project_id')->nullable()->comment('folder id');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        /**
+         * Variants are part of the LemonSqueezy product payment
+         * gateway. Each product has at least one variant (itself) or
+         * several variants in case we want to offer different prices
+         * and configurations for the same product.
+         */
+        Schema::create('variants', function (Blueprint $table) {
+            $table->id();
+
+            $table->uuid()
+                  ->required()
+                  ->comment('The UUID used in webpages');
+
+            $table->foreignId('course_id')
+                  ->required();
+
+            $table->string('description')
+                ->comment('The variant description, to understand what it is');
+
+            $table->integer('lemonsqueezy_variant_id')
+                  ->required();
+
+            $table->decimal('price_override', 10, 2)
+                  ->nullable()
+                  ->comment('In case we would like to override the variant lemonsqueezy default price');
+
+            $table->boolean('is_default')
+                  ->required()
+                  ->comment('In case no variant is passed to the Eduka payments gateway, it will use the variant id from the default one here');
+
             $table->timestamps();
             $table->softDeletes();
         });
@@ -356,6 +385,7 @@ class CreateEdukaSchema extends Migration
 
             $table->integer('user_id');
             $table->integer('course_id');
+            $table->integer('variant_id');
             $table->text('response_body')->nullable();
             // @todo break down everything from response body
 
