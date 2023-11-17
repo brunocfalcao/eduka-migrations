@@ -267,6 +267,10 @@ class CreateEdukaSchema extends Migration
                   ->required()
                   ->comment('The UUID used in webpages');
 
+            $table->string('canonical')
+                  ->unique()
+                  ->comment('Unique canonical to get the variant by this value');
+
             $table->foreignId('course_id')
                   ->required();
 
