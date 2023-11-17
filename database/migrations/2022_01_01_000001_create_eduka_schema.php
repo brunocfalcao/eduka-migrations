@@ -276,12 +276,12 @@ class CreateEdukaSchema extends Migration
             $table->integer('lemonsqueezy_variant_id')
                   ->required();
 
-            $table->decimal('price_override', 10, 2)
+            $table->decimal('lemonsqueezy_price_override', 10, 2)
                   ->nullable()
                   ->comment('In case we would like to override the variant lemonsqueezy default price');
 
             $table->boolean('is_default')
-                  ->required()
+                  ->default(false)
                   ->comment('In case no variant is passed to the Eduka payments gateway, it will use the variant id from the default one here');
 
             $table->timestamps();
