@@ -139,6 +139,9 @@ class CreateEdukaSchema extends Migration
                 ->unique()
                 ->comment('The url uuid to direct link this video. Unique identifier');
 
+            $table->foreignId('chapter_id')
+                ->nullable();
+
             $table->boolean('is_visible')
                 ->default(false)
                 ->comment('If the video can be presented on screen (doesnt mean is clickable)');
@@ -250,6 +253,8 @@ class CreateEdukaSchema extends Migration
             $table->boolean('enable_purchase_power_parity')->default(false);
 
             $table->string('vimeo_project_id')->nullable()->comment('folder id');
+            $table->string('backblaze_bucket_name')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
         });
@@ -315,10 +320,10 @@ class CreateEdukaSchema extends Migration
         /**
          * N-N tables.
          */
-        Schema::create('chapter_video', function (Blueprint $table) {
+        Schema::create('chapter_variant', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('video_id');
+            $table->foreignId('variant_id');
             $table->foreignId('chapter_id');
             $table->unsignedInteger('index');
 
