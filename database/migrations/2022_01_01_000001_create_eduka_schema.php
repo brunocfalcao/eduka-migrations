@@ -252,9 +252,6 @@ class CreateEdukaSchema extends Migration
 
             $table->boolean('enable_purchase_power_parity')->default(false);
 
-            $table->string('vimeo_project_id')->nullable()->comment('folder id');
-            $table->string('backblaze_bucket_name')->nullable();
-
             $table->timestamps();
             $table->softDeletes();
         });
@@ -292,6 +289,8 @@ class CreateEdukaSchema extends Migration
             $table->boolean('is_default')
                   ->default(false)
                   ->comment('In case no variant is passed to the Eduka payments gateway, it will use the variant id from the default one here');
+
+            $table->string('vimeo_project_id')->nullable()->comment('folder id');
 
             $table->timestamps();
             $table->softDeletes();
