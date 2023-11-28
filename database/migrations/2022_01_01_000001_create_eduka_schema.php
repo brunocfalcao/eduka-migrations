@@ -40,12 +40,12 @@ class CreateEdukaSchema extends Migration
                 ->nullable()
                 ->comment('Some extra details about this chapter subject');
 
-            $table->unsignedInteger('index')
-                ->comment('Chapter index related to the course that it belongs to');
+            // $table->unsignedInteger('index')
+                // ->comment('Chapter index related to the course that it belongs to');
 
-            $table->foreignId('course_id')
-                ->nullable()
-                ->comment('Related course id');
+            // $table->foreignId('variant_id')
+            //     ->nullable()
+            //     ->comment('Related variant id');
 
             $table->timestamps();
             $table->softDeletes();
@@ -252,6 +252,10 @@ class CreateEdukaSchema extends Migration
 
             $table->boolean('enable_purchase_power_parity')->default(false);
 
+            $table->string('vimeo_project_id')->nullable()->comment('folder id');
+            $table->string('backblaze_bucket_name')->nullable()->comment('backblaze bucket id');
+
+
             $table->timestamps();
             $table->softDeletes();
         });
@@ -290,8 +294,6 @@ class CreateEdukaSchema extends Migration
                   ->default(false)
                   ->comment('In case no variant is passed to the Eduka payments gateway, it will use the variant id from the default one here');
 
-            $table->string('vimeo_project_id')->nullable()->comment('folder id');
-
             $table->timestamps();
             $table->softDeletes();
         });
@@ -319,12 +321,12 @@ class CreateEdukaSchema extends Migration
         /**
          * N-N tables.
          */
-        Schema::create('chapter_variant', function (Blueprint $table) {
+        Schema::create('variant_video', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('variant_id');
-            $table->foreignId('chapter_id');
-            $table->unsignedInteger('index');
+            $table->foreignId('video_id');
+            $table->integer('index');
 
             $table->timestamps();
             $table->softDeletes();
