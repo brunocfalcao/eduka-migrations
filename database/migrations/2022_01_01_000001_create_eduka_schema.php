@@ -40,8 +40,8 @@ class CreateEdukaSchema extends Migration
                 ->nullable()
                 ->comment('Some extra details about this chapter subject');
 
-            // $table->unsignedInteger('index')
-                // ->comment('Chapter index related to the course that it belongs to');
+            $table->unsignedInteger('index')
+                  ->comment('Chapter index related to the course that it belongs to');
 
             // $table->foreignId('variant_id')
             //     ->nullable()
@@ -49,8 +49,6 @@ class CreateEdukaSchema extends Migration
 
             $table->timestamps();
             $table->softDeletes();
-
-            $table->index(['id', 'index']);
         });
 
         Schema::create('series', function (Blueprint $table) {
@@ -239,7 +237,7 @@ class CreateEdukaSchema extends Migration
                 ->comment("Service provider namespace. E.g.: 'MasteringNova\\MasteringNovaServiceProvider'");
 
             $table->string('lemonsqueezy_store_id')
-                  ->required()
+                  ->nullable()
                   ->comment('The LS store id, even if they are multiple variants, they will all belong to the same store');
 
             $table->boolean('is_decommissioned')
