@@ -284,7 +284,7 @@ class CreateEdukaSchema extends Migration
                 ->comment('The variant description, to understand what it is');
 
             $table->integer('lemonsqueezy_variant_id')
-                  ->required();
+                  ->nullable();
 
             $table->decimal('lemonsqueezy_price_override', 10, 2)
                   ->nullable()
