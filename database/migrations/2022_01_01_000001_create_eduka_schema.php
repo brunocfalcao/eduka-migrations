@@ -253,7 +253,6 @@ class CreateEdukaSchema extends Migration
             $table->string('vimeo_project_id')->nullable()->comment('folder id');
             $table->string('backblaze_bucket_name')->nullable()->comment('backblaze bucket id');
 
-
             $table->timestamps();
             $table->softDeletes();
         });
