@@ -370,9 +370,9 @@ class CreateEdukaSchema extends Migration
 
             $table->longText('description');
 
-            $table->integer('discount_amount');
+            $table->unsignedInteger('discount_amount');
 
-            $table->integer('discount_percentage');
+            $table->unsignedInteger('discount_percentage');
 
             $table->foreignId('course_id')
                   ->constrained();
@@ -384,8 +384,8 @@ class CreateEdukaSchema extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
 
-            $table->integer('user_id');
-            $table->integer('variant_id');
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('variant_id');
 
             $table->longText('response_body')
                   ->nullable();
@@ -413,19 +413,19 @@ class CreateEdukaSchema extends Migration
                   ->nullable()
                   ->comment('nullable means it was not refunded');
 
-            $table->integer('tax')
+            $table->unsignedInteger('tax')
                   ->default(0)
                   ->comment('in cents');
 
-            $table->integer('discount_total')
+            $table->unsignedInteger('discount_total')
                   ->default(0)
                   ->comment('in cents');
 
-            $table->integer('subtotal')
+            $table->unsignedInteger('subtotal')
                   ->default(0)
                   ->comment('in cents');
 
-            $table->integer('total')
+            $table->unsignedInteger('total')
                   ->default(0)
                   ->comment('in cents');
 
