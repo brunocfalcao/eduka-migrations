@@ -368,6 +368,8 @@ class CreateEdukaSchema extends Migration
 
             $table->string('code');
 
+            $table->longText('description');
+
             $table->integer('discount_amount');
 
             $table->integer('discount_percentage');
