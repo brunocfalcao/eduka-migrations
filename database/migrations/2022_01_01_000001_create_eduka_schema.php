@@ -199,7 +199,7 @@ class CreateEdukaSchema extends Migration
             $table->string('provider_namespace')
                   ->comment("Service provider namespace. E.g.: 'MasteringNova\\MasteringNovaServiceProvider'");
 
-            $table->string('lemonsqueezy_store_id')
+            $table->string('lemon_squeezy_store_id')
                   ->nullable()
                   ->comment('The LS store id, even if they are multiple variants, they will all belong to the same store');
 
@@ -244,10 +244,10 @@ class CreateEdukaSchema extends Migration
                   ->nullable()
                   ->comment('The variant description, to understand what it is');
 
-            $table->string('lemonsqueezy_variant_id')
+            $table->string('lemon_squeezy_variant_id')
                   ->nullable();
 
-            $table->decimal('lemonsqueezy_price_override', 10, 2)
+            $table->decimal('lemon_squeezy_price_override', 10, 2)
                   ->nullable()
                   ->comment('In case we would like to override the variant lemonsqueezy default price');
 
