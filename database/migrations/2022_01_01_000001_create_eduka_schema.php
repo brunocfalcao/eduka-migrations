@@ -9,52 +9,6 @@ class CreateEdukaSchema extends Migration
 {
     public function up()
     {
-        Schema::create('videos', function (Blueprint $table) {
-            $table->id();
-
-            $table->string('name')
-                  ->comment('The title of the video');
-
-            $table->longText('description')
-                  ->nullable()
-                  ->comment('More information about this video');
-
-            $table->string('vimeo_id')
-                  ->nullable()
-                  ->comment('Vimeo video related id');
-
-            $table->unsignedInteger('duration')
-                  ->nullable()
-                  ->comment('Video duration, in seconds');
-
-            $table->uuid('uuid')
-                  ->unique()
-                  ->comment('The url uuid to direct link this video. Unique identifier');
-
-            $table->boolean('is_visible')
-                  ->default(false)
-                  ->comment('If the video can be presented on screen (doesnt mean is clickable)');
-
-            $table->boolean('is_active')
-                  ->default(false)
-                  ->comment('If when the video appears, it can be clickable, interactable, etc');
-
-            $table->boolean('is_free')
-                  ->default(false)
-                  ->comment('When a video is free it doesnt need to be accessible via a logged/paid in page');
-
-            $table->string('meta_title')
-                  ->nullable();
-
-            $table->string('meta_description')
-                  ->nullable();
-
-            $table->string('meta_canonical_url')
-                  ->nullable();
-
-            $table->timestamps();
-            $table->softDeletes();
-        });
 
         Schema::create('chapters', function (Blueprint $table) {
             $table->id();
@@ -98,6 +52,91 @@ class CreateEdukaSchema extends Migration
             $table->softDeletes();
         });
 
+        Schema::table('users', function (Blueprint $table) {
+
+            // No need to use the email verification.
+            $table->dropColumn(['email_verified_at']);
+
+            // Name and password are not mandatory. Only email is.
+            $table->string('name')
+                  ->nullable()
+                  ->change();
+
+            $table->string('password')
+                  ->nullable()
+                  ->change();
+
+            $table->uuid('uuid')
+                  ->after('remember_token')
+                  ->comment('Used for e.g. view user data');
+
+            $table->boolean('receives_notifications')
+                  ->default(true)
+                  ->after('remember_token')
+                  ->comment('Global flag that enables or disables notifications sent to the user');
+
+            $table->unsignedInteger('old_id')
+                  ->nullable()
+                  ->after('id');
+
+            $table->timestamp('deleted_at', 0)
+                  ->after('updated_at')
+                  ->nullable();
+        });
+
+        Schema::create('videos', function (Blueprint $table) {
+            $table->id();
+
+            $table->string('name')
+                  ->comment('The title of the video');
+
+            $table->longText('description')
+                  ->nullable()
+                  ->comment('More information about this video');
+
+            $table->string('vimeo_id')
+                  ->nullable()
+                  ->comment('Vimeo video related id');
+
+            $table->unsignedInteger('duration')
+                  ->nullable()
+                  ->comment('Video duration, in seconds');
+
+            $table->unsignedBigInteger('created_by');
+
+            $table->uuid('uuid')
+                  ->unique()
+                  ->comment('The url uuid to direct link this video. Unique identifier');
+
+            $table->boolean('is_visible')
+                  ->default(false)
+                  ->comment('If the video can be presented on screen (doesnt mean is clickable)');
+
+            $table->boolean('is_active')
+                  ->default(false)
+                  ->comment('If when the video appears, it can be clickable, interactable, etc');
+
+            $table->boolean('is_free')
+                  ->default(false)
+                  ->comment('When a video is free it doesnt need to be accessible via a logged/paid in page');
+
+            $table->string('meta_title')
+                  ->nullable();
+
+            $table->string('meta_description')
+                  ->nullable();
+
+            $table->string('meta_canonical_url')
+                  ->nullable();
+
+            $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('created_by')
+                  ->references('id')
+                  ->on('users');
+        });
+
         Schema::create('links', function (Blueprint $table) {
             $table->id();
 
@@ -131,38 +170,6 @@ class CreateEdukaSchema extends Migration
 
             $table->timestamps();
             $table->softDeletes();
-        });
-
-        Schema::table('users', function (Blueprint $table) {
-
-            // No need to use the email verification.
-            $table->dropColumn(['email_verified_at']);
-
-            // Name and password are not mandatory. Only email is.
-            $table->string('name')
-                  ->nullable()
-                  ->change();
-
-            $table->string('password')
-                  ->nullable()
-                  ->change();
-
-            $table->uuid('uuid')
-                  ->after('remember_token')
-                  ->comment('Used for e.g. view user data');
-
-            $table->boolean('receives_notifications')
-                  ->default(true)
-                  ->after('remember_token')
-                  ->comment('Global flag that enables or disables notifications sent to the user');
-
-            $table->unsignedInteger('old_id')
-                  ->nullable()
-                  ->after('id');
-
-            $table->timestamp('deleted_at', 0)
-                  ->after('updated_at')
-                  ->nullable();
         });
 
         Schema::create('courses', function (Blueprint $table) {
