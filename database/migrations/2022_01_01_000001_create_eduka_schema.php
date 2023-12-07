@@ -10,20 +10,6 @@ class CreateEdukaSchema extends Migration
     public function up()
     {
 
-        Schema::create('chapters', function (Blueprint $table) {
-            $table->id();
-
-            $table->string('name')
-                  ->comment('The chapter name');
-
-            $table->longText('description')
-                  ->nullable()
-                  ->comment('Some extra details about this chapter subject');
-
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
         Schema::create('series', function (Blueprint $table) {
             $table->id();
 
@@ -33,20 +19,6 @@ class CreateEdukaSchema extends Migration
             $table->longText('description')
                   ->nullable()
                   ->comment('Some extra details about this series subject');
-
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
-        Schema::create('tags', function (Blueprint $table) {
-            $table->id();
-
-            $table->string('name')
-                  ->comment('The tag name');
-
-            $table->longText('description')
-                  ->nullable()
-                  ->comment('The tag description');
 
             $table->timestamps();
             $table->softDeletes();
@@ -228,6 +200,40 @@ class CreateEdukaSchema extends Migration
             $table->string('backblaze_bucket_name')
                   ->nullable()
                   ->comment('backblaze bucket id');
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('chapters', function (Blueprint $table) {
+            $table->id();
+
+            $table->foreignId('course_id')
+                  ->constrained();
+
+            $table->string('name')
+                  ->comment('The chapter name');
+
+            $table->longText('description')
+                  ->nullable()
+                  ->comment('Some extra details about this chapter subject');
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('tags', function (Blueprint $table) {
+            $table->id();
+
+            $table->string('name')
+                  ->comment('The tag name');
+
+            $table->foreignId('course_id')
+                  ->constrained();
+
+            $table->longText('description')
+                  ->nullable()
+                  ->comment('The tag description');
 
             $table->timestamps();
             $table->softDeletes();
