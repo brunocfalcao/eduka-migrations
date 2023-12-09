@@ -351,6 +351,18 @@ class CreateEdukaSchema extends Migration
             $table->softDeletes();
         });
 
+        Schema::create('course_user', function (Blueprint $table) {
+            $table->id();
+
+            $table->foreignId('course_id')
+                  ->constrained();
+
+            $table->foreignId('user_id')
+                  ->constrained();
+
+            $table->timestamps();
+        });
+
         Schema::create('tag_video', function (Blueprint $table) {
             $table->id();
 
