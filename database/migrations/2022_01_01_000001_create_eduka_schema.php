@@ -422,50 +422,77 @@ class CreateEdukaSchema extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('variant_id');
-
-            $table->longText('response_body')
-                  ->nullable();
-            // @todo break down everything from response body
-
-            $table->string('remote_reference_order_id')
+            $table->foreignId('user_id')
                   ->nullable()
-                  ->comment('should not be nullable.the order id that was created on 3rd party payment provider. eg: lemon squeezy');
+                  ->constrained();
 
-            $table->string('remote_reference_customer_id')
-                  ->nullable()
-                  ->comment('should not be nullable.the customer id that was created on 3rd party payment provider. eg: lemon squeezy');
+            $table->longText('response_body');
 
-            $table->string('remote_reference_order_attribute_id')
-                  ->nullable()
-                  ->comment('should not be nullable.the payload.data.attributes.id that was created on 3rd party payment provider. eg: lemon squeezy, 5688a31e-cf51-4fa8-8615-c52c54327e4e');
-
-            $table->string('currency_id')
+            $table->longText('custom_data')
                   ->nullable();
 
-            $table->string('remote_reference_payment_status')
+            $table->string('event_name')
                   ->nullable();
 
-            $table->timestamp('refunded_at')
-                  ->nullable()
-                  ->comment('nullable means it was not refunded');
+            $table->string('store_id')
+                  ->nullable();
 
-            $table->unsignedInteger('tax')
-                  ->default(0)
-                  ->comment('in cents');
+            $table->string('customer_id')
+                  ->nullable();
 
-            $table->unsignedInteger('discount_total')
-                  ->default(0)
-                  ->comment('in cents');
+            $table->string('order_number')
+                  ->nullable();
 
-            $table->unsignedInteger('subtotal')
-                  ->default(0)
-                  ->comment('in cents');
+            $table->string('user_name')
+                  ->nullable();
 
-            $table->unsignedInteger('total')
-                  ->default(0)
-                  ->comment('in cents');
+            $table->string('user_email')
+                  ->nullable();
+
+            $table->string('subtotal_usd')
+                  ->nullable();
+
+            $table->string('discount_total_usd')
+                  ->nullable();
+
+            $table->string('tax_usd')
+                  ->nullable();
+
+            $table->string('total_usd')
+                  ->nullable();
+
+            $table->string('tax_name')
+                  ->nullable();
+
+            $table->string('status')
+                  ->nullable();
+
+            $table->boolean('refunded')
+                  ->nullable();
+
+            $table->string('refunded_at')
+                  ->nullable();
+
+            $table->string('order_id')
+                  ->nullable();
+
+            $table->string('product_id')
+                  ->nullable();
+
+            $table->string('variant_id')
+                  ->nullable();
+
+            $table->string('product_name')
+                  ->nullable();
+
+            $table->string('variant_name')
+                  ->nullable();
+
+            $table->string('price')
+                  ->nullable();
+
+            $table->text('receipt')
+                  ->nullable();
 
             $table->timestamps();
             $table->softDeletes();
