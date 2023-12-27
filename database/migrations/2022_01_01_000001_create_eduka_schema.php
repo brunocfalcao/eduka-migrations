@@ -34,6 +34,10 @@ class CreateEdukaSchema extends Migration
                   ->nullable()
                   ->change();
 
+            $table->boolean('is_admin')
+                  ->after('password')
+                  ->default(false);
+
             $table->string('password')
                   ->nullable()
                   ->change();
