@@ -70,6 +70,9 @@ class CreateEdukaSchema extends Migration
                   ->nullable()
                   ->comment('More information about this video');
 
+            $table->string('canonical')
+                  ->unique();
+
             $table->string('vimeo_id')
                   ->nullable()
                   ->comment('Vimeo video related id');
@@ -100,9 +103,6 @@ class CreateEdukaSchema extends Migration
                   ->nullable();
 
             $table->string('meta_description')
-                  ->nullable();
-
-            $table->string('meta_canonical_url')
                   ->nullable();
 
             $table->timestamps();
