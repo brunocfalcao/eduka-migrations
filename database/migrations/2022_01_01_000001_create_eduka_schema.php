@@ -186,6 +186,10 @@ class CreateEdukaSchema extends Migration
                   ->nullable()
                   ->comment('The LS store id, even if they are multiple variants, they will all belong to the same store');
 
+            $table->string('vimeo_folder_uri')
+                  ->nullable()
+                  ->comment('The Vimeo folder ID, please refer to the Vimeo API reference');
+
             $table->boolean('is_decommissioned')
                   ->default(false)
                   ->comment('Global flag to disable a course. When a course is decommissioned, it cannot be purchased');
@@ -221,6 +225,10 @@ class CreateEdukaSchema extends Migration
             $table->longText('description')
                   ->nullable()
                   ->comment('Some extra details about this chapter subject');
+
+            $table->string('vimeo_folder_uri')
+                  ->nullable()
+                  ->comment('The Vimeo folder ID, please refer to the Vimeo API reference');
 
             $table->timestamps();
             $table->softDeletes();
