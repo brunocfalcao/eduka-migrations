@@ -80,116 +80,6 @@ class CreateEdukaSchema extends Migration
                   ->constrained()
                   ->nullable()
                   ->comment('The course id where the user has an admin role');
-
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
-        Schema::create('videos_completed', function (Blueprint $table) {
-            $table->id();
-
-            $table->foreignId('video_id')
-                  ->constrained()
-                  ->nullable()
-                  ->comment('Related video id');
-
-            $table->foreignId('user_id')
-                  ->constrained()
-                  ->nullable()
-                  ->comment('Related video id');
-
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
-        Schema::create('courses', function (Blueprint $table) {
-            $table->id();
-
-            $table->string('name')
-                  ->comment('Course marketing name');
-
-            $table->string('canonical')
-                  ->unique();
-
-            $table->string('meta_description')
-                  ->nullable()
-                  ->comment('A bit more information about the course');
-
-            $table->string('meta_twitter_alias')
-                  ->nullable()
-                  ->comment('Meta tag twitter:site');
-
-            $table->string('meta_title')
-                  ->nullable()
-                  ->comment('Meta tag *:title and <title> tags');
-
-            $table->string('admin_name')
-                  ->comment('Admin name, for notifications');
-
-            $table->string('admin_email')
-                  ->comment('Admin email, for notifications');
-
-            $table->string('twitter_handle')
-                  ->nullable()
-                  ->comment('Twitter handle, for email signatures, without the (at) symbol and without url prefix');
-
-            $table->string('provider_namespace')
-                  ->comment("Service provider namespace. E.g.: 'MasteringNova\\MasteringNovaServiceProvider'");
-
-            $table->string('lemon_squeezy_store_id')
-                  ->nullable()
-                  ->comment('The LS store id, even if they are multiple variants, they will all belong to the same store');
-
-            $table->string('vimeo_folder_uri')
-                  ->nullable()
-                  ->comment('The Vimeo folder ID, please refer to the Vimeo API reference');
-
-            $table->boolean('is_decommissioned')
-                  ->default(false)
-                  ->comment('Global flag to disable a course. When a course is decommissioned, it cannot be purchased');
-
-            $table->dateTime('launched_at')
-                  ->nullable()
-                  ->comment('The date where the course was/will be launched');
-
-            $table->boolean('enable_purchase_power_parity')
-                  ->default(false);
-
-            $table->string('vimeo_project_id')
-                  ->nullable()
-                  ->comment('folder id');
-
-            $table->string('backblaze_bucket_name')
-                  ->nullable()
-                  ->comment('backblaze bucket id');
-
-            $table->smallInteger('course_completion')
-                ->default(0)
-                ->comment('Mostly used in prelaunched page');
-
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
-        Schema::create('chapters', function (Blueprint $table) {
-            $table->id();
-
-            $table->foreignId('course_id')
-                  ->constrained();
-
-            $table->string('name')
-                  ->comment('The chapter name');
-
-            $table->longText('description')
-                  ->nullable()
-                  ->comment('Some extra details about this chapter subject');
-
-            $table->string('vimeo_folder_uri')
-                  ->nullable()
-                  ->comment('The Vimeo folder ID, please refer to the Vimeo API reference');
-
-            $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('tags', function (Blueprint $table) {
@@ -295,12 +185,6 @@ class CreateEdukaSchema extends Migration
             $table->string('filename')
                   ->nullable()
                   ->comment('Used only on the moment we are locally storing the video for uploads to external platforms (YouTube, Vimeo, Backblaze, etc)');
-
-            $table->string('meta_title')
-                  ->nullable();
-
-            $table->string('meta_description')
-                  ->nullable();
 
             $table->timestamps();
             $table->softDeletes();
@@ -522,6 +406,40 @@ class CreateEdukaSchema extends Migration
 
             $table->unsignedInteger('index')
                   ->default(1);
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('user_video_completed', function (Blueprint $table) {
+            $table->id();
+
+            $table->foreignId('video_id')
+                  ->constrained()
+                  ->nullable()
+                  ->comment('Related video id');
+
+            $table->foreignId('user_id')
+                  ->constrained()
+                  ->nullable()
+                  ->comment('Related video id');
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('user_video_bookmarked', function (Blueprint $table) {
+            $table->id();
+
+            $table->foreignId('video_id')
+                  ->constrained()
+                  ->nullable()
+                  ->comment('Related video id');
+
+            $table->foreignId('user_id')
+                  ->constrained()
+                  ->nullable()
+                  ->comment('Related video id');
 
             $table->timestamps();
             $table->softDeletes();
