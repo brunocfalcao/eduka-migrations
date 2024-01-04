@@ -190,7 +190,6 @@ class CreateEdukaSchema extends Migration
 
             $table->timestamps();
             $table->softDeletes();
-            >>>>>>> 88e626f9db796ad4963599b5d98d9d8f611990f6
         });
 
         Schema::create('tags', function (Blueprint $table) {
