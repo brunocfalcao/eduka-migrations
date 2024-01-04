@@ -209,6 +209,10 @@ class CreateEdukaSchema extends Migration
                   ->nullable()
                   ->comment('backblaze bucket id');
 
+            $table->smallInteger('course_completion')
+                ->default(0)
+                ->comment('Mostly used in prelaunched page');
+
             $table->timestamps();
             $table->softDeletes();
         });
