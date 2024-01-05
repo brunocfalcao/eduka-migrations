@@ -427,20 +427,15 @@ class CreateEdukaSchema extends Migration
             $table->string('order_id')
                   ->nullable();
 
-            $table->string('lemon_squeezy_product_id')
-                  ->nullable();
+            $table->string('lemon_squeezy_product_id');
 
-            $table->string('lemon_squeezy_variant_id')
-                  ->nullable();
+            $table->string('lemon_squeezy_variant_id');
 
-            $table->string('lemon_squeezy_product_name')
-                  ->nullable();
+            $table->string('lemon_squeezy_product_name');
 
-            $table->string('lemon_squeezy_variant_name')
-                  ->nullable();
+            $table->string('lemon_squeezy_variant_name');
 
-            $table->string('price')
-                  ->nullable();
+            $table->string('price');
 
             $table->text('receipt')
                   ->nullable();
