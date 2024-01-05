@@ -208,85 +208,6 @@ class CreateEdukaSchema extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('orders', function (Blueprint $table) {
-            $table->id();
-
-            $table->foreignId('user_id')
-                  ->nullable()
-                  ->constrained();
-
-            $table->longText('response_body');
-
-            $table->longText('custom_data')
-                  ->nullable();
-
-            $table->string('event_name')
-                  ->nullable();
-
-            $table->string('store_id')
-                  ->nullable();
-
-            $table->string('customer_id')
-                  ->nullable();
-
-            $table->string('order_number')
-                  ->nullable();
-
-            $table->string('user_name')
-                  ->nullable();
-
-            $table->string('user_email')
-                  ->nullable();
-
-            $table->string('subtotal_usd')
-                  ->nullable();
-
-            $table->string('discount_total_usd')
-                  ->nullable();
-
-            $table->string('tax_usd')
-                  ->nullable();
-
-            $table->string('total_usd')
-                  ->nullable();
-
-            $table->string('tax_name')
-                  ->nullable();
-
-            $table->string('status')
-                  ->nullable();
-
-            $table->boolean('refunded')
-                  ->nullable();
-
-            $table->string('refunded_at')
-                  ->nullable();
-
-            $table->string('order_id')
-                  ->nullable();
-
-            $table->string('product_id')
-                  ->nullable();
-
-            $table->string('variant_id')
-                  ->nullable();
-
-            $table->string('product_name')
-                  ->nullable();
-
-            $table->string('variant_name')
-                  ->nullable();
-
-            $table->string('price')
-                  ->nullable();
-
-            $table->text('receipt')
-                  ->nullable();
-
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
         Schema::create('chapters', function (Blueprint $table) {
             $table->id();
 
@@ -440,6 +361,89 @@ class CreateEdukaSchema extends Migration
                   ->constrained()
                   ->nullable()
                   ->comment('Related video id');
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('orders', function (Blueprint $table) {
+            $table->id();
+
+            $table->foreignId('user_id')
+                  ->nullable()
+                  ->constrained();
+
+            $table->foreignId('variant_id')
+                  ->constrained()
+                  ->comment('This is the related variants.id FK, not the lemon squeezy variant id!');
+
+            $table->longText('response_body');
+
+            $table->longText('custom_data')
+                  ->nullable();
+
+            $table->string('event_name')
+                  ->nullable();
+
+            $table->string('store_id')
+                  ->nullable();
+
+            $table->string('customer_id')
+                  ->nullable();
+
+            $table->string('order_number')
+                  ->nullable();
+
+            $table->string('user_name')
+                  ->nullable();
+
+            $table->string('user_email')
+                  ->nullable();
+
+            $table->string('subtotal_usd')
+                  ->nullable();
+
+            $table->string('discount_total_usd')
+                  ->nullable();
+
+            $table->string('tax_usd')
+                  ->nullable();
+
+            $table->string('total_usd')
+                  ->nullable();
+
+            $table->string('tax_name')
+                  ->nullable();
+
+            $table->string('status')
+                  ->nullable();
+
+            $table->boolean('refunded')
+                  ->nullable();
+
+            $table->string('refunded_at')
+                  ->nullable();
+
+            $table->string('order_id')
+                  ->nullable();
+
+            $table->string('lemon_squeezy_product_id')
+                  ->nullable();
+
+            $table->string('lemon_squeezy_variant_id')
+                  ->nullable();
+
+            $table->string('lemon_squeezy_product_name')
+                  ->nullable();
+
+            $table->string('lemon_squeezy_variant_name')
+                  ->nullable();
+
+            $table->string('price')
+                  ->nullable();
+
+            $table->text('receipt')
+                  ->nullable();
 
             $table->timestamps();
             $table->softDeletes();
