@@ -75,8 +75,12 @@ class CreateEdukaSchema extends Migration
             $table->string('password')
                   ->change();
 
+            $table->string('twitter_handle')
+                  ->nullable()
+                  ->after('password');
+
             $table->foreignId('course_id_as_admin')
-                  ->after('password')
+                  ->after('twitter_handle')
                   ->constrained()
                   ->nullable()
                   ->comment('The course id where the user has an admin role');
@@ -276,6 +280,8 @@ class CreateEdukaSchema extends Migration
 
         Schema::create('variants', function (Blueprint $table) {
             $table->id();
+
+            $table->string('name');
 
             $table->string('canonical')
                   ->unique();
