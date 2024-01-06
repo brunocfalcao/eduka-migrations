@@ -170,6 +170,10 @@ class CreateEdukaSchema extends Migration
                   ->unique()
                   ->comment('The url uuid to direct link this video. Unique identifier');
 
+            $table->longText('meta')
+                  ->nullable()
+                  ->comment('Array of meta SEO tags for the HEADER tag, key=tag name, value=tag value');
+
             $table->string('canonical')
                   ->unique()
                   ->comment('The kebab case video name');
