@@ -18,6 +18,10 @@ class CreateEdukaSchema extends Migration
             $table->string('canonical')
                   ->unique();
 
+            $table->longText('meta')
+                  ->nullable()
+                  ->comment('Array of meta SEO tags for the HEADER tag, key=tag name, value=tag value');
+
             $table->string('domain')
                   ->unique()
                   ->comment('The domain where this course is shown (e.g.: the course landing page)');
