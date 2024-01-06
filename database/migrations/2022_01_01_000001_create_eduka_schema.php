@@ -46,6 +46,10 @@ class CreateEdukaSchema extends Migration
                   ->default(true)
                   ->comment('Defines if course is active and viewable. If active and launched_at in the future, then it is in prelaunch mode');
 
+            $table->unsignedInteger('progress')
+                  ->default(0)
+                  ->comment('The current course completion progress, for release');
+
             $table->boolean('is_ppp_enabled')
                   ->default(true)
                   ->comment('Does the course enables PPP capability');
