@@ -58,9 +58,13 @@ class CreateEdukaSchema extends Migration
                   ->nullable()
                   ->comment('The LS store id, even if they are multiple variants, they will all belong to the same store');
 
-            $table->string('vimeo_uri_key')
+            $table->string('vimeo_uri')
                   ->nullable()
-                  ->comment('The Vimeo folder ID, please refer to the Vimeo API reference');
+                  ->comment('The Vimeo folder URI, for sub-folders creation. Please refer to the Vimeo API reference');
+
+            $table->string('vimeo_folder_id')
+                  ->nullable()
+                  ->comment('The Vimeo folder ID, for folder renaming. Please refer to the Vimeo API reference');
 
             $table->string('backblaze_bucket_name')
                   ->nullable()
@@ -92,6 +96,8 @@ class CreateEdukaSchema extends Migration
                   ->constrained()
                   ->nullable()
                   ->comment('The course id where the user has an admin role');
+
+            $table->softDeletes();
         });
 
         Schema::create('tags', function (Blueprint $table) {
@@ -237,9 +243,13 @@ class CreateEdukaSchema extends Migration
                   ->nullable()
                   ->comment('Some extra details about this chapter subject');
 
-            $table->string('vimeo_uri_key')
+            $table->string('vimeo_uri')
                   ->nullable()
-                  ->comment('The Vimeo folder ID, please refer to the Vimeo API reference');
+                  ->comment('The Vimeo folder URI, for sub-folders creation. Please refer to the Vimeo API reference');
+
+            $table->string('vimeo_folder_id')
+                  ->nullable()
+                  ->comment('The Vimeo folder ID, for folder renaming. Please refer to the Vimeo API reference');
 
             $table->timestamps();
             $table->softDeletes();
