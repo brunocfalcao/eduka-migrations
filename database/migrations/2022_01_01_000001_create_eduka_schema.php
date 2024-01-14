@@ -93,8 +93,8 @@ class CreateEdukaSchema extends Migration
 
             $table->foreignId('course_id_as_admin')
                   ->after('twitter_handle')
-                  ->constrained()
                   ->nullable()
+                  ->constrained()
                   ->comment('The course id where the user has an admin role');
 
             $table->softDeletes();
@@ -141,165 +141,6 @@ class CreateEdukaSchema extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('series', function (Blueprint $table) {
-            $table->id();
-
-            $table->string('name')
-                  ->comment('The series name');
-
-            $table->longText('description')
-                  ->nullable()
-                  ->comment('Some extra details about this series subject');
-
-            $table->foreignId('course_id')
-                  ->constrained()
-                  ->comment('Relatable course id');
-
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
-        Schema::create('videos', function (Blueprint $table) {
-            $table->id();
-
-            $table->string('name')
-                  ->comment('The title of the video');
-
-            $table->longText('description')
-                  ->nullable()
-                  ->comment('More information about this video');
-
-            $table->foreignId('course_id')
-                  ->constrained();
-
-            $table->uuid('uuid')
-                  ->unique()
-                  ->comment('The url uuid to direct link this video. Unique identifier');
-
-            $table->longText('meta')
-                  ->nullable()
-                  ->comment('Array of meta SEO tags for the HEADER tag, key=tag name, value=tag value');
-
-            $table->string('canonical')
-                  ->unique()
-                  ->comment('The kebab case video name');
-
-            $table->unsignedInteger('duration')
-                  ->nullable()
-                  ->comment('Video duration, in seconds');
-
-            $table->boolean('is_visible')
-                  ->default(false)
-                  ->comment('If the video can be presented on screen (doesnt mean is clickable)');
-
-            $table->boolean('is_active')
-                  ->default(false)
-                  ->comment('If when the video appears, it can be clickable, interactable, etc');
-
-            $table->boolean('is_free')
-                  ->default(false)
-                  ->comment('When a video is free it doesnt need to be accessible via a logged/paid in page');
-
-            $table->string('vimeo_id')
-                  ->nullable()
-                  ->comment('Vimeo video related id');
-
-            $table->string('filename')
-                  ->nullable()
-                  ->comment('Used only on the moment we are locally storing the video for uploads to external platforms (YouTube, Vimeo, Backblaze, etc)');
-
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
-        Schema::create('links', function (Blueprint $table) {
-            $table->id();
-
-            $table->string('name')
-                  ->comment('The link name');
-
-            $table->string('url')
-                  ->comment('The link url');
-
-            $table->foreignId('video_id')
-                  ->constrained()
-                  ->nullable()
-                  ->comment('Related video id');
-
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
-        Schema::create('chapters', function (Blueprint $table) {
-            $table->id();
-
-            $table->foreignId('course_id')
-                  ->constrained();
-
-            $table->string('name')
-                  ->comment('The chapter name');
-
-            $table->longText('description')
-                  ->nullable()
-                  ->comment('Some extra details about this chapter subject');
-
-            $table->string('vimeo_uri')
-                  ->nullable()
-                  ->comment('The Vimeo folder URI, for sub-folders creation. Please refer to the Vimeo API reference');
-
-            $table->string('vimeo_folder_id')
-                  ->nullable()
-                  ->comment('The Vimeo folder ID, for folder renaming. Please refer to the Vimeo API reference');
-
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
-        Schema::create('chapter_video', function (Blueprint $table) {
-            $table->id();
-
-            $table->foreignId('chapter_id')
-                  ->constrained();
-
-            $table->foreignId('video_id')
-                  ->constrained();
-
-            $table->unsignedInteger('index')
-                  ->default(1);
-
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
-        Schema::create('series_video', function (Blueprint $table) {
-            $table->id();
-
-            $table->foreignId('series_id')
-                  ->constrained();
-
-            $table->foreignId('video_id')
-                  ->constrained();
-
-            $table->unsignedInteger('index')
-                  ->default(1);
-
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
-        Schema::create('tag_video', function (Blueprint $table) {
-            $table->id();
-
-            $table->foreignId('video_id')
-                  ->constrained();
-
-            $table->foreignId('tag_id')
-                  ->constrained();
-
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
         Schema::create('variants', function (Blueprint $table) {
             $table->id();
 
@@ -339,56 +180,6 @@ class CreateEdukaSchema extends Migration
 
             $table->foreignId('variant_id')
                   ->constrained();
-
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
-        Schema::create('chapter_variant', function (Blueprint $table) {
-            $table->id();
-
-            $table->foreignId('chapter_id')
-                  ->constrained();
-
-            $table->foreignId('variant_id')
-                  ->constrained();
-
-            $table->unsignedInteger('index')
-                  ->default(1);
-
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
-        Schema::create('user_video_completed', function (Blueprint $table) {
-            $table->id();
-
-            $table->foreignId('video_id')
-                  ->constrained()
-                  ->nullable()
-                  ->comment('Related video id');
-
-            $table->foreignId('user_id')
-                  ->constrained()
-                  ->nullable()
-                  ->comment('Related video id');
-
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
-        Schema::create('user_video_bookmarked', function (Blueprint $table) {
-            $table->id();
-
-            $table->foreignId('video_id')
-                  ->constrained()
-                  ->nullable()
-                  ->comment('Related video id');
-
-            $table->foreignId('user_id')
-                  ->constrained()
-                  ->nullable()
-                  ->comment('Related video id');
 
             $table->timestamps();
             $table->softDeletes();
@@ -467,6 +258,205 @@ class CreateEdukaSchema extends Migration
 
             $table->text('receipt')
                   ->nullable();
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('chapters', function (Blueprint $table) {
+            $table->id();
+
+            $table->foreignId('course_id')
+                  ->constrained();
+
+            $table->string('name')
+                  ->comment('The chapter name');
+
+            $table->longText('description')
+                  ->nullable()
+                  ->comment('Some extra details about this chapter subject');
+
+            $table->string('vimeo_uri')
+                  ->nullable()
+                  ->comment('The Vimeo folder URI, for sub-folders creation. Please refer to the Vimeo API reference');
+
+            $table->string('vimeo_folder_id')
+                  ->nullable()
+                  ->comment('The Vimeo folder ID, for folder renaming. Please refer to the Vimeo API reference');
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('videos', function (Blueprint $table) {
+            $table->id();
+
+            $table->string('name')
+                  ->comment('The title of the video');
+
+            $table->longText('description')
+                  ->nullable()
+                  ->comment('More information about this video');
+
+            $table->foreignId('course_id')
+                  ->constrained();
+
+            $table->foreignId('chapter_id')
+                  ->constrained();
+
+            $table->unsignedInteger('index')
+                  ->comment('The video index in the respective chapter');
+
+            $table->uuid('uuid')
+                  ->unique()
+                  ->comment('The url uuid to direct link this video. Unique identifier');
+
+            $table->longText('meta')
+                  ->nullable()
+                  ->comment('Array of meta SEO tags for the HEADER tag, key=tag name, value=tag value');
+
+            $table->string('canonical')
+                  ->unique()
+                  ->comment('The kebab case video name');
+
+            $table->unsignedInteger('duration')
+                  ->nullable()
+                  ->comment('Video duration, in seconds');
+
+            $table->boolean('is_visible')
+                  ->default(false)
+                  ->comment('If the video can be presented on screen (doesnt mean is clickable)');
+
+            $table->boolean('is_active')
+                  ->default(false)
+                  ->comment('If when the video appears, it can be clickable, interactable, etc');
+
+            $table->boolean('is_free')
+                  ->default(false)
+                  ->comment('When a video is free it doesnt need to be accessible via a logged/paid in page');
+
+            $table->string('vimeo_id')
+                  ->nullable()
+                  ->comment('Vimeo video related id');
+
+            $table->string('filename')
+                  ->nullable()
+                  ->comment('Used only on the moment we are locally storing the video for uploads to external platforms (YouTube, Vimeo, Backblaze, etc)');
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('links', function (Blueprint $table) {
+            $table->id();
+
+            $table->string('name')
+                  ->comment('The link name');
+
+            $table->string('url')
+                  ->comment('The link url');
+
+            $table->foreignId('video_id')
+                  ->constrained()
+                  ->nullable()
+                  ->comment('Related video id');
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('series', function (Blueprint $table) {
+            $table->id();
+
+            $table->string('name')
+                  ->comment('The series name');
+
+            $table->longText('description')
+                  ->nullable()
+                  ->comment('Some extra details about this series subject');
+
+            $table->foreignId('course_id')
+                  ->constrained()
+                  ->comment('Relatable course id');
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('series_video', function (Blueprint $table) {
+            $table->id();
+
+            $table->foreignId('series_id')
+                  ->constrained();
+
+            $table->foreignId('video_id')
+                  ->constrained();
+
+            $table->unsignedInteger('index')
+                  ->default(1);
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('tag_video', function (Blueprint $table) {
+            $table->id();
+
+            $table->foreignId('video_id')
+                  ->constrained();
+
+            $table->foreignId('tag_id')
+                  ->constrained();
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('chapter_variant', function (Blueprint $table) {
+            $table->id();
+
+            $table->foreignId('chapter_id')
+                  ->constrained();
+
+            $table->foreignId('variant_id')
+                  ->constrained();
+
+            $table->unsignedInteger('index')
+                  ->default(1);
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('user_video_completed', function (Blueprint $table) {
+            $table->id();
+
+            $table->foreignId('video_id')
+                  ->constrained()
+                  ->nullable()
+                  ->comment('Related video id');
+
+            $table->foreignId('user_id')
+                  ->constrained()
+                  ->nullable()
+                  ->comment('Related video id');
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('user_video_bookmarked', function (Blueprint $table) {
+            $table->id();
+
+            $table->foreignId('video_id')
+                  ->constrained()
+                  ->nullable()
+                  ->comment('Related video id');
+
+            $table->foreignId('user_id')
+                  ->constrained()
+                  ->nullable()
+                  ->comment('Related video id');
 
             $table->timestamps();
             $table->softDeletes();
