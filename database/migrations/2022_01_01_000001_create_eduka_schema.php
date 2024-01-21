@@ -13,62 +13,62 @@ class CreateEdukaSchema extends Migration
             $table->id();
 
             $table->string('name')
-                  ->comment('Course marketing name');
+                ->comment('Course marketing name');
 
             $table->string('canonical')
-                  ->unique();
+                ->unique();
 
             $table->longText('meta')
-                  ->nullable()
-                  ->comment('Array of meta SEO tags for the HEADER tag, key=tag name, value=tag value');
+                ->nullable()
+                ->comment('Array of meta SEO tags for the HEADER tag, key=tag name, value=tag value');
 
             $table->string('domain')
-                  ->unique()
-                  ->comment('The domain where this course is shown (e.g.: the course landing page)');
+                ->unique()
+                ->comment('The domain where this course is shown (e.g.: the course landing page)');
 
             $table->string('provider_namespace')
-                  ->nullable()
-                  ->comment("Course provider namespace. E.g.: 'MasteringNova\\MasteringNovaServiceProvider'");
+                ->nullable()
+                ->comment("Course provider namespace. E.g.: 'MasteringNova\\MasteringNovaServiceProvider'");
 
             $table->dateTime('prelaunched_at')
-                  ->nullable()
-                  ->comment('The date where the course was/will be prelaunched');
+                ->nullable()
+                ->comment('The date where the course was/will be prelaunched');
 
             $table->dateTime('launched_at')
-                  ->nullable()
-                  ->comment('The date where the course was/will be launched');
+                ->nullable()
+                ->comment('The date where the course was/will be launched');
 
             $table->dateTime('retired_at')
-                  ->nullable()
-                  ->comment('The date where the course was/will be retired');
+                ->nullable()
+                ->comment('The date where the course was/will be retired');
 
             $table->boolean('is_active')
-                  ->default(true)
-                  ->comment('Defines if course is active and viewable. If active and launched_at in the future, then it is in prelaunch mode');
+                ->default(true)
+                ->comment('Defines if course is active and viewable. If active and launched_at in the future, then it is in prelaunch mode');
 
             $table->unsignedInteger('progress')
-                  ->default(0)
-                  ->comment('The current course completion progress, for release');
+                ->default(0)
+                ->comment('The current course completion progress, for release');
 
             $table->boolean('is_ppp_enabled')
-                  ->default(true)
-                  ->comment('Does the course enables PPP capability');
+                ->default(true)
+                ->comment('Does the course enables PPP capability');
 
             $table->string('lemon_squeezy_store_id')
-                  ->nullable()
-                  ->comment('The LS store id, even if they are multiple variants, they will all belong to the same store');
+                ->nullable()
+                ->comment('The LS store id, even if they are multiple variants, they will all belong to the same store');
 
             $table->string('vimeo_uri')
-                  ->nullable()
-                  ->comment('The Vimeo folder URI, for sub-folders creation. Please refer to the Vimeo API reference');
+                ->nullable()
+                ->comment('The Vimeo folder URI, for sub-folders creation. Please refer to the Vimeo API reference');
 
             $table->string('vimeo_folder_id')
-                  ->nullable()
-                  ->comment('The Vimeo folder ID, for folder renaming. Please refer to the Vimeo API reference');
+                ->nullable()
+                ->comment('The Vimeo folder ID, for folder renaming. Please refer to the Vimeo API reference');
 
             $table->string('backblaze_bucket_name')
-                  ->nullable()
-                  ->comment('backblaze bucket id');
+                ->nullable()
+                ->comment('backblaze bucket id');
 
             $table->timestamps();
             $table->softDeletes();
@@ -81,21 +81,21 @@ class CreateEdukaSchema extends Migration
 
             // Name and password are not mandatory. Only email is.
             $table->string('name')
-                  ->nullable()
-                  ->change();
+                ->nullable()
+                ->change();
 
             $table->string('password')
-                  ->change();
+                ->change();
 
             $table->string('twitter_handle')
-                  ->nullable()
-                  ->after('password');
+                ->nullable()
+                ->after('password');
 
             $table->foreignId('course_id_as_admin')
-                  ->after('twitter_handle')
-                  ->nullable()
-                  ->constrained()
-                  ->comment('The course id where the user has an admin role');
+                ->after('twitter_handle')
+                ->nullable()
+                ->constrained()
+                ->comment('The course id where the user has an admin role');
 
             $table->softDeletes();
         });
@@ -104,14 +104,14 @@ class CreateEdukaSchema extends Migration
             $table->id();
 
             $table->string('name')
-                  ->comment('The tag name');
+                ->comment('The tag name');
 
             $table->longText('description')
-                  ->nullable()
-                  ->comment('The tag description');
+                ->nullable()
+                ->comment('The tag description');
 
             $table->foreignId('course_id')
-                  ->constrained();
+                ->constrained();
 
             $table->timestamps();
             $table->softDeletes();
@@ -121,10 +121,10 @@ class CreateEdukaSchema extends Migration
             $table->id();
 
             $table->foreignId('course_id')
-                  ->constrained();
+                ->constrained();
 
             $table->foreignId('user_id')
-                  ->constrained();
+                ->constrained();
 
             $table->timestamps();
         });
@@ -133,7 +133,7 @@ class CreateEdukaSchema extends Migration
             $table->id();
 
             $table->foreignId('course_id')
-                  ->constrained();
+                ->constrained();
 
             $table->string('email');
 
@@ -147,26 +147,26 @@ class CreateEdukaSchema extends Migration
             $table->string('name');
 
             $table->string('canonical')
-                  ->unique();
+                ->unique();
 
             $table->longText('description')
-                  ->nullable()
-                  ->comment('The variant description, to understand what it is');
+                ->nullable()
+                ->comment('The variant description, to understand what it is');
 
             $table->foreignId('course_id')
-                  ->constrained()
-                  ->comment('Related course');
+                ->constrained()
+                ->comment('Related course');
 
             $table->string('lemon_squeezy_variant_id')
-                  ->nullable();
+                ->nullable();
 
             $table->decimal('lemon_squeezy_price_override', 10, 2)
-                  ->nullable()
-                  ->comment('In case we would like to override the variant lemonsqueezy default price');
+                ->nullable()
+                ->comment('In case we would like to override the variant lemonsqueezy default price');
 
             $table->boolean('is_default')
-                  ->default(false)
-                  ->comment('In case no variant is passed to the Eduka payments gateway, it will use the variant id from the default one here');
+                ->default(false)
+                ->comment('In case no variant is passed to the Eduka payments gateway, it will use the variant id from the default one here');
 
             $table->timestamps();
             $table->softDeletes();
@@ -176,10 +176,10 @@ class CreateEdukaSchema extends Migration
             $table->id();
 
             $table->foreignId('user_id')
-                  ->constrained();
+                ->constrained();
 
             $table->foreignId('variant_id')
-                  ->constrained();
+                ->constrained();
 
             $table->timestamps();
             $table->softDeletes();
@@ -189,62 +189,62 @@ class CreateEdukaSchema extends Migration
             $table->id();
 
             $table->foreignId('user_id')
-                  ->nullable()
-                  ->constrained();
+                ->nullable()
+                ->constrained();
 
             $table->foreignId('variant_id')
-                  ->constrained()
-                  ->comment('This is the related variants.id FK, not the lemon squeezy variant id!');
+                ->constrained()
+                ->comment('This is the related variants.id FK, not the lemon squeezy variant id!');
 
             $table->longText('response_body');
 
             $table->longText('custom_data')
-                  ->nullable();
+                ->nullable();
 
             $table->string('event_name')
-                  ->nullable();
+                ->nullable();
 
             $table->string('store_id')
-                  ->nullable();
+                ->nullable();
 
             $table->string('customer_id')
-                  ->nullable();
+                ->nullable();
 
             $table->string('order_number')
-                  ->nullable();
+                ->nullable();
 
             $table->string('user_name')
-                  ->nullable();
+                ->nullable();
 
             $table->string('user_email')
-                  ->nullable();
+                ->nullable();
 
             $table->string('subtotal_usd')
-                  ->nullable();
+                ->nullable();
 
             $table->string('discount_total_usd')
-                  ->nullable();
+                ->nullable();
 
             $table->string('tax_usd')
-                  ->nullable();
+                ->nullable();
 
             $table->string('total_usd')
-                  ->nullable();
+                ->nullable();
 
             $table->string('tax_name')
-                  ->nullable();
+                ->nullable();
 
             $table->string('status')
-                  ->nullable();
+                ->nullable();
 
             $table->boolean('refunded')
-                  ->nullable();
+                ->nullable();
 
             $table->string('refunded_at')
-                  ->nullable();
+                ->nullable();
 
             $table->string('order_id')
-                  ->nullable();
+                ->nullable();
 
             $table->string('lemon_squeezy_product_id');
 
@@ -257,7 +257,7 @@ class CreateEdukaSchema extends Migration
             $table->string('price');
 
             $table->text('receipt')
-                  ->nullable();
+                ->nullable();
 
             $table->timestamps();
             $table->softDeletes();
@@ -267,22 +267,32 @@ class CreateEdukaSchema extends Migration
             $table->id();
 
             $table->foreignId('course_id')
-                  ->constrained();
+                ->constrained();
 
             $table->string('name')
-                  ->comment('The chapter name');
+                ->comment('The chapter name');
+
+            $table->unsignedInteger('index')
+                ->comment('Index number inside the course');
 
             $table->longText('description')
-                  ->nullable()
-                  ->comment('Some extra details about this chapter subject');
+                ->nullable()
+                ->comment('Some extra details about this chapter subject');
+
+            $table->longText('meta')
+                ->nullable()
+                ->comment('Array of meta SEO tags for the HEADER tag, key=tag name, value=tag value');
+
+            $table->string('filename')
+                ->nullable();
 
             $table->string('vimeo_uri')
-                  ->nullable()
-                  ->comment('The Vimeo folder URI, for sub-folders creation. Please refer to the Vimeo API reference');
+                ->nullable()
+                ->comment('The Vimeo folder URI, for sub-folders creation. Please refer to the Vimeo API reference');
 
             $table->string('vimeo_folder_id')
-                  ->nullable()
-                  ->comment('The Vimeo folder ID, for folder renaming. Please refer to the Vimeo API reference');
+                ->nullable()
+                ->comment('The Vimeo folder ID, for folder renaming. Please refer to the Vimeo API reference');
 
             $table->timestamps();
             $table->softDeletes();
@@ -292,56 +302,56 @@ class CreateEdukaSchema extends Migration
             $table->id();
 
             $table->string('name')
-                  ->comment('The title of the video');
+                ->comment('The title of the video');
 
             $table->longText('description')
-                  ->nullable()
-                  ->comment('More information about this video');
+                ->nullable()
+                ->comment('More information about this video');
 
             $table->foreignId('course_id')
-                  ->constrained();
+                ->constrained();
 
             $table->foreignId('chapter_id')
-                  ->constrained();
+                ->constrained();
 
             $table->unsignedInteger('index')
-                  ->comment('The video index in the respective chapter');
+                ->comment('The video index in the respective chapter');
 
             $table->uuid('uuid')
-                  ->unique()
-                  ->comment('The url uuid to direct link this video. Unique identifier');
+                ->unique()
+                ->comment('The url uuid to direct link this video. Unique identifier');
 
             $table->longText('meta')
-                  ->nullable()
-                  ->comment('Array of meta SEO tags for the HEADER tag, key=tag name, value=tag value');
+                ->nullable()
+                ->comment('Array of meta SEO tags for the HEADER tag, key=tag name, value=tag value');
 
             $table->string('canonical')
-                  ->unique()
-                  ->comment('The kebab case video name');
+                ->unique()
+                ->comment('The kebab case video name');
 
             $table->unsignedInteger('duration')
-                  ->nullable()
-                  ->comment('Video duration, in seconds');
+                ->nullable()
+                ->comment('Video duration, in seconds');
 
             $table->boolean('is_visible')
-                  ->default(false)
-                  ->comment('If the video can be presented on screen (doesnt mean is clickable)');
+                ->default(false)
+                ->comment('If the video can be presented on screen (doesnt mean is clickable)');
 
             $table->boolean('is_active')
-                  ->default(false)
-                  ->comment('If when the video appears, it can be clickable, interactable, etc');
+                ->default(false)
+                ->comment('If when the video appears, it can be clickable, interactable, etc');
 
             $table->boolean('is_free')
-                  ->default(false)
-                  ->comment('When a video is free it doesnt need to be accessible via a logged/paid in page');
+                ->default(false)
+                ->comment('When a video is free it doesnt need to be accessible via a logged/paid in page');
 
             $table->string('vimeo_id')
-                  ->nullable()
-                  ->comment('Vimeo video related id');
+                ->nullable()
+                ->comment('Vimeo video related id');
 
             $table->string('filename')
-                  ->nullable()
-                  ->comment('Used only on the moment we are locally storing the video for uploads to external platforms (YouTube, Vimeo, Backblaze, etc)');
+                ->nullable()
+                ->comment('Used only on the moment we are locally storing the video for uploads to external platforms (YouTube, Vimeo, Backblaze, etc)');
 
             $table->timestamps();
             $table->softDeletes();
@@ -351,15 +361,15 @@ class CreateEdukaSchema extends Migration
             $table->id();
 
             $table->string('name')
-                  ->comment('The link name');
+                ->comment('The link name');
 
             $table->string('url')
-                  ->comment('The link url');
+                ->comment('The link url');
 
             $table->foreignId('video_id')
-                  ->constrained()
-                  ->nullable()
-                  ->comment('Related video id');
+                ->constrained()
+                ->nullable()
+                ->comment('Related video id');
 
             $table->timestamps();
             $table->softDeletes();
@@ -369,15 +379,15 @@ class CreateEdukaSchema extends Migration
             $table->id();
 
             $table->string('name')
-                  ->comment('The series name');
+                ->comment('The series name');
 
             $table->longText('description')
-                  ->nullable()
-                  ->comment('Some extra details about this series subject');
+                ->nullable()
+                ->comment('Some extra details about this series subject');
 
             $table->foreignId('course_id')
-                  ->constrained()
-                  ->comment('Relatable course id');
+                ->constrained()
+                ->comment('Relatable course id');
 
             $table->timestamps();
             $table->softDeletes();
@@ -387,13 +397,13 @@ class CreateEdukaSchema extends Migration
             $table->id();
 
             $table->foreignId('series_id')
-                  ->constrained();
+                ->constrained();
 
             $table->foreignId('video_id')
-                  ->constrained();
+                ->constrained();
 
             $table->unsignedInteger('index')
-                  ->default(1);
+                ->default(1);
 
             $table->timestamps();
             $table->softDeletes();
@@ -403,10 +413,10 @@ class CreateEdukaSchema extends Migration
             $table->id();
 
             $table->foreignId('video_id')
-                  ->constrained();
+                ->constrained();
 
             $table->foreignId('tag_id')
-                  ->constrained();
+                ->constrained();
 
             $table->timestamps();
             $table->softDeletes();
@@ -416,13 +426,13 @@ class CreateEdukaSchema extends Migration
             $table->id();
 
             $table->foreignId('chapter_id')
-                  ->constrained();
+                ->constrained();
 
             $table->foreignId('variant_id')
-                  ->constrained();
+                ->constrained();
 
             $table->unsignedInteger('index')
-                  ->default(1);
+                ->default(1);
 
             $table->timestamps();
             $table->softDeletes();
@@ -432,14 +442,14 @@ class CreateEdukaSchema extends Migration
             $table->id();
 
             $table->foreignId('video_id')
-                  ->constrained()
-                  ->nullable()
-                  ->comment('Related video id');
+                ->constrained()
+                ->nullable()
+                ->comment('Related video id');
 
             $table->foreignId('user_id')
-                  ->constrained()
-                  ->nullable()
-                  ->comment('Related video id');
+                ->constrained()
+                ->nullable()
+                ->comment('Related video id');
 
             $table->timestamps();
             $table->softDeletes();
@@ -449,14 +459,14 @@ class CreateEdukaSchema extends Migration
             $table->id();
 
             $table->foreignId('video_id')
-                  ->constrained()
-                  ->nullable()
-                  ->comment('Related video id');
+                ->constrained()
+                ->nullable()
+                ->comment('Related video id');
 
             $table->foreignId('user_id')
-                  ->constrained()
-                  ->nullable()
-                  ->comment('Related video id');
+                ->constrained()
+                ->nullable()
+                ->comment('Related video id');
 
             $table->timestamps();
             $table->softDeletes();
