@@ -22,6 +22,10 @@ class CreateEdukaSchema extends Migration
                 ->nullable()
                 ->comment('Array of meta SEO tags for the HEADER tag, key=tag name, value=tag value');
 
+            $table->string('filename')
+                ->nullable()
+                ->comment('SEO image for social integration');
+
             $table->string('domain')
                 ->unique()
                 ->comment('The domain where this course is shown (e.g.: the course landing page)');
@@ -115,6 +119,8 @@ class CreateEdukaSchema extends Migration
 
             $table->timestamps();
             $table->softDeletes();
+
+            $table->index(['id', 'course_id']);
         });
 
         Schema::create('course_user', function (Blueprint $table) {
@@ -135,10 +141,15 @@ class CreateEdukaSchema extends Migration
             $table->foreignId('course_id')
                 ->constrained();
 
+            $table->string('name')
+                ->nullable();
+
             $table->string('email');
 
             $table->timestamps();
             $table->softDeletes();
+
+            $table->index(['course_id', 'email']);
         });
 
         Schema::create('variants', function (Blueprint $table) {
@@ -190,6 +201,9 @@ class CreateEdukaSchema extends Migration
 
             $table->foreignId('user_id')
                 ->nullable()
+                ->constrained();
+
+            $table->foreignId('course_id')
                 ->constrained();
 
             $table->foreignId('variant_id')
@@ -300,6 +314,9 @@ class CreateEdukaSchema extends Migration
 
         Schema::create('videos', function (Blueprint $table) {
             $table->id();
+
+            $table->unsignedInteger('old_id')
+                ->nullable();
 
             $table->string('name')
                 ->comment('The title of the video');
