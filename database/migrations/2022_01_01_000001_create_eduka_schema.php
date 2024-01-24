@@ -155,6 +155,8 @@ class CreateEdukaSchema extends Migration
         Schema::create('variants', function (Blueprint $table) {
             $table->id();
 
+            $table->uuid();
+
             $table->string('name');
 
             $table->string('canonical')
