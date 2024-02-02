@@ -59,8 +59,16 @@ class CreateEdukaSchema extends Migration
                 ->comment('Does the course enables PPP capability');
 
             $table->string('lemon_squeezy_store_id')
-                ->nullable()
                 ->comment('The LS store id, even if they are multiple variants, they will all belong to the same store');
+
+            $table->text('lemon_squeezy_api_key')
+                ->comment('The LS api key, for checkout generation scope');
+
+            $table->text('lemon_squeezy_secret_key')
+                ->comment('The LS secret key, for checkout generation scope');
+
+            $table->text('lemon_squeezy_hash_key')
+                ->comment('The LS hash key, for webhook calls verification');
 
             $table->string('vimeo_uri')
                 ->nullable()
