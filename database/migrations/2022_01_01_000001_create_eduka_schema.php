@@ -9,6 +9,25 @@ class CreateEdukaSchema extends Migration
 {
     public function up()
     {
+        Schema::create('organizations', function (Blueprint $table) {
+            $table->id();
+
+            $table->string('name')
+                ->comment('Organization name. An organization aggregates courses');
+
+            $table->text('description')
+                ->nullable();
+
+            $table->string('domain')
+                ->comment('The backend domain where users will log in');
+
+            $table->string('provider_namespace')
+                ->comment('Class for the backend management package');
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
 
@@ -50,6 +69,10 @@ class CreateEdukaSchema extends Migration
                 ->default(true)
                 ->comment('Defines if course is active and viewable. If active and launched_at in the future, then it is in prelaunch mode');
 
+            $table->foreignId('organization_id')
+                ->constrained()
+                ->comment('The related organization');
+
             $table->unsignedInteger('progress')
                 ->default(0)
                 ->comment('The current course completion progress, for release');
@@ -63,9 +86,6 @@ class CreateEdukaSchema extends Migration
 
             $table->text('lemon_squeezy_api_key')
                 ->comment('The LS api key, for checkout generation scope');
-
-            $table->text('lemon_squeezy_secret_key')
-                ->comment('The LS secret key, for checkout generation scope');
 
             $table->text('lemon_squeezy_hash_key')
                 ->comment('The LS hash key, for webhook calls verification');
