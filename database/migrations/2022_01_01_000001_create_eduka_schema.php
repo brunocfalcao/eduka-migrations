@@ -359,6 +359,7 @@ class CreateEdukaSchema extends Migration
                 ->constrained();
 
             $table->foreignId('chapter_id')
+                ->nullable()
                 ->constrained();
 
             $table->unsignedInteger('index')
