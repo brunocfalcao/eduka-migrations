@@ -109,12 +109,7 @@ class CreateEdukaSchema extends Migration
         Schema::table('users', function (Blueprint $table) {
 
             // No need to use the email verification.
-            $table->dropColumn(['email_verified_at']);
-
-            // Name and password are not mandatory. Only email is.
-            $table->string('name')
-                ->nullable()
-                ->change();
+            $table->dropColumn(['email_verified_at', 'email']);
 
             $table->string('password')
                 ->change();
@@ -130,6 +125,12 @@ class CreateEdukaSchema extends Migration
                 ->comment('The course id where the user has an admin role');
 
             $table->softDeletes();
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->text('email')
+                ->nullable()
+                ->after('name');
         });
 
         Schema::create('tags', function (Blueprint $table) {
@@ -172,12 +173,10 @@ class CreateEdukaSchema extends Migration
             $table->string('name')
                 ->nullable();
 
-            $table->string('email');
+            $table->text('email');
 
             $table->timestamps();
             $table->softDeletes();
-
-            $table->index(['course_id', 'email']);
         });
 
         Schema::create('variants', function (Blueprint $table) {
