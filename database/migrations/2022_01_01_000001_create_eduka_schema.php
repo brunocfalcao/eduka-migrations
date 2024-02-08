@@ -519,6 +519,36 @@ class CreateEdukaSchema extends Migration
             $table->softDeletes();
         });
 
+        /**
+         * This is part of the eduka middleware log, where we log
+         * all the requests that were called, what site context was detected
+         * and what request payload was received, http headers, etc.
+         */
+        Schema::create('eduka_request_logs', function (Blueprint $table) {
+            $table->id();
+
+            $table->string('referrer')
+                  ->nullable()
+                  ->comment('The referer header in case it exists');
+
+            $table->text('url')
+                  ->comment('The full URL request, including querystring values');
+
+            $table->longText('request_payload')
+                  ->nullable();
+
+            $table->longText('request_headers')
+                  ->nullable();
+
+            $table->foreignId('organization_id')
+                  ->nullable();
+
+            $table->foreignId('course_id')
+                  ->nullable();
+
+            $table->timeStamps();
+        });
+
         // Run initial framework schema seeder.
         $seeder = new InitialSchemaSeeder();
         $seeder->run();
