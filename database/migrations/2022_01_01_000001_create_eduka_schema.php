@@ -528,23 +528,23 @@ class CreateEdukaSchema extends Migration
             $table->id();
 
             $table->string('referrer')
-                  ->nullable()
-                  ->comment('The referer header in case it exists');
+                ->nullable()
+                ->comment('The referer header in case it exists');
 
             $table->text('url')
-                  ->comment('The full URL request, including querystring values');
+                ->comment('The full URL request, including querystring values');
 
             $table->longText('request_payload')
-                  ->nullable();
+                ->nullable();
 
             $table->longText('request_headers')
-                  ->nullable();
+                ->nullable();
 
             $table->foreignId('organization_id')
-                  ->nullable();
+                ->nullable();
 
             $table->foreignId('course_id')
-                  ->nullable();
+                ->nullable();
 
             $table->timeStamps();
         });
