@@ -34,6 +34,8 @@ class CreateEdukaSchema extends Migration
             $table->string('name')
                 ->comment('Course marketing name');
 
+            $table->uuid('uuid');
+
             $table->string('canonical')
                 ->unique();
 
@@ -108,10 +110,19 @@ class CreateEdukaSchema extends Migration
 
         Schema::table('users', function (Blueprint $table) {
 
-            // No need to use the email verification.
-            $table->dropColumn(['email_verified_at', 'email']);
+            $table->foreignId('organization_id')
+                ->nullable()
+                ->after('id');
 
-            $table->string('password')
+            // Dropping columns that somehow can't be changed.
+            $table->dropColumn([
+                'email_verified_at',
+                'email',
+                'password',
+            ]);
+
+            $table->string('name')
+                ->nullable()
                 ->change();
 
             $table->string('twitter_handle')
@@ -127,10 +138,21 @@ class CreateEdukaSchema extends Migration
             $table->softDeletes();
         });
 
+        /**
+         * Strangely we can't apply a change() for a text() type
+         * so we need to drop the column and recreate it.
+         *
+         * Email can be nullable because later on we will use OAuth
+         * platforms to authenticate the user.
+         */
         Schema::table('users', function (Blueprint $table) {
             $table->text('email')
                 ->nullable()
                 ->after('name');
+
+            $table->string('password')
+                ->nullable()
+                ->after('email');
         });
 
         Schema::create('tags', function (Blueprint $table) {
