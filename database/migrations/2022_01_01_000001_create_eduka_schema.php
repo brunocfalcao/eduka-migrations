@@ -135,9 +135,14 @@ class CreateEdukaSchema extends Migration
                 ->constrained()
                 ->comment('The course id where the user has an admin role');
 
+            $table->timestamp('previous_logged_in_at')
+                ->nullable()
+                ->after('remember_token')
+                ->comment('This column and the last_logged_in_at allows to create a date interval to compute actions that happened between the current and last login');
+
             $table->timestamp('last_logged_in_at')
                 ->nullable()
-                ->after('remember_token');
+                ->after('previous_logged_in_at');
 
             $table->softDeletes();
         });
@@ -215,13 +220,17 @@ class CreateEdukaSchema extends Migration
             $table->string('canonical')
                 ->unique();
 
-            $table->longText('description')
+            $table->text('description')
                 ->nullable()
                 ->comment('The variant description, to understand what it is');
 
             $table->foreignId('course_id')
                 ->constrained()
                 ->comment('Related course');
+
+            $table->longText('lemon_squeezy_data')
+                ->nullable()
+                ->comment('Related Lemon Squeezy repository data');
 
             $table->string('lemon_squeezy_variant_id')
                 ->nullable();
@@ -560,10 +569,19 @@ class CreateEdukaSchema extends Migration
             $table->text('url')
                 ->comment('The full URL request, including querystring values');
 
-            $table->longText('request_payload')
+            $table->longText('payload')
                 ->nullable();
 
-            $table->longText('request_headers')
+            $table->longText('headers')
+                ->nullable();
+
+            $table->string('route')
+                ->nullable();
+
+            $table->longText('parameters')
+                ->nullable();
+
+            $table->longText('middleware')
                 ->nullable();
 
             $table->foreignId('organization_id')
