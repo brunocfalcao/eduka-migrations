@@ -135,6 +135,10 @@ class CreateEdukaSchema extends Migration
                 ->constrained()
                 ->comment('The course id where the user has an admin role');
 
+            $table->timestamp('last_logged_in_at')
+                ->nullable()
+                ->after('remember_token');
+
             $table->softDeletes();
         });
 
