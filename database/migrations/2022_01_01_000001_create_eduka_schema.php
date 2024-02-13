@@ -39,6 +39,15 @@ class CreateEdukaSchema extends Migration
             $table->string('canonical')
                 ->unique();
 
+            $table->string('twitter_handle')
+                ->nullable();
+
+            $table->string('linkedin_url')
+                ->nullable();
+
+            $table->string('instagram_handle')
+                ->nullable();
+
             $table->longText('meta')
                 ->nullable()
                 ->comment('Array of meta SEO tags for the HEADER tag, key=tag name, value=tag value');
@@ -110,10 +119,6 @@ class CreateEdukaSchema extends Migration
 
         Schema::table('users', function (Blueprint $table) {
 
-            $table->foreignId('organization_id')
-                ->nullable()
-                ->after('id');
-
             // Dropping columns that somehow can't be changed.
             $table->dropColumn([
                 'email_verified_at',
@@ -125,12 +130,8 @@ class CreateEdukaSchema extends Migration
                 ->nullable()
                 ->change();
 
-            $table->string('twitter_handle')
-                ->nullable()
-                ->after('password');
-
             $table->foreignId('course_id_as_admin')
-                ->after('twitter_handle')
+                ->after('email')
                 ->nullable()
                 ->constrained()
                 ->comment('The course id where the user has an admin role');
@@ -559,8 +560,11 @@ class CreateEdukaSchema extends Migration
          * all the requests that were called, what site context was detected
          * and what request payload was received, http headers, etc.
          */
-        Schema::create('eduka_request_logs', function (Blueprint $table) {
+        Schema::create('request_logs', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('user_id')
+                ->nullable();
 
             $table->string('referrer')
                 ->nullable()
