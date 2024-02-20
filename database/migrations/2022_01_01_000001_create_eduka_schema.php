@@ -275,6 +275,14 @@ class CreateEdukaSchema extends Migration
                 ->constrained()
                 ->comment('This is the related variants.id FK, not the lemon squeezy variant id!');
 
+            $table->string('provider')
+                ->default('lemon-squeezy')
+                ->comment('Normally is paddle or lemon-squeezy');
+
+            $table->string('country')
+                ->nullable()
+                ->comment('Cloudflare country code (// https://developers.cloudflare.com/fundamentals/reference/http-request-headers/)');
+
             $table->longText('response_body');
 
             $table->longText('custom_data')
@@ -325,13 +333,17 @@ class CreateEdukaSchema extends Migration
             $table->string('order_id')
                 ->nullable();
 
-            $table->string('lemon_squeezy_product_id');
+            $table->string('lemon_squeezy_product_id')
+                ->nullable();
 
-            $table->string('lemon_squeezy_variant_id');
+            $table->string('lemon_squeezy_variant_id')
+                ->nullable();
 
-            $table->string('lemon_squeezy_product_name');
+            $table->string('lemon_squeezy_product_name')
+                ->nullable();
 
-            $table->string('lemon_squeezy_variant_name');
+            $table->string('lemon_squeezy_variant_name')
+                ->nullable();
 
             $table->string('price');
 
@@ -521,7 +533,7 @@ class CreateEdukaSchema extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('user_video_completed', function (Blueprint $table) {
+        Schema::create('user_video_seen', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('video_id')
