@@ -48,7 +48,11 @@ class CreateEdukaSchema extends Migration
             $table->string('instagram_handle')
                 ->nullable();
 
-            $table->longText('meta')
+            $table->longText('meta_names')
+                ->nullable()
+                ->comment('Array of meta SEO tags for the HEADER tag, key=tag name, value=tag value');
+
+            $table->longText('meta_properties')
                 ->nullable()
                 ->comment('Array of meta SEO tags for the HEADER tag, key=tag name, value=tag value');
 
@@ -370,7 +374,11 @@ class CreateEdukaSchema extends Migration
                 ->nullable()
                 ->comment('Some extra details about this chapter subject');
 
-            $table->longText('meta')
+            $table->longText('meta_names')
+                ->nullable()
+                ->comment('Array of meta SEO tags for the HEADER tag, key=tag name, value=tag value');
+
+            $table->longText('meta_properties')
                 ->nullable()
                 ->comment('Array of meta SEO tags for the HEADER tag, key=tag name, value=tag value');
 
@@ -416,9 +424,13 @@ class CreateEdukaSchema extends Migration
                 ->unique()
                 ->comment('The url uuid to direct link this video. Unique identifier');
 
-            $table->longText('meta')
+            $table->longText('meta_names')
                 ->nullable()
-                ->comment('Array of meta SEO tags for the HEADER tag, key=tag name, value=tag value');
+                ->comment('Array of meta names SEO tags for the HEADER tag, key=tag name, value=tag value');
+
+            $table->longText('meta_properties')
+                ->nullable()
+                ->comment('Array of meta properties SEO tags for the HEADER tag, key=tag name, value=tag value');
 
             $table->string('canonical')
                 ->unique()
