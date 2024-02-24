@@ -34,6 +34,12 @@ class CreateEdukaSchema extends Migration
             $table->string('name')
                 ->comment('Course marketing name');
 
+            $table->string('admin_name')
+                ->comment('The course admin user name (a.k.a. the instructor)');
+
+            $table->string('admin_email')
+                ->comment('The course admin user email');
+
             $table->uuid('uuid');
 
             $table->string('canonical')
@@ -133,12 +139,6 @@ class CreateEdukaSchema extends Migration
             $table->string('name')
                 ->nullable()
                 ->change();
-
-            $table->foreignId('course_id_as_admin')
-                ->after('email')
-                ->nullable()
-                ->constrained()
-                ->comment('The course id where the user has an admin role');
 
             $table->timestamp('previous_logged_in_at')
                 ->nullable()
@@ -436,6 +436,14 @@ class CreateEdukaSchema extends Migration
                 ->unique()
                 ->comment('The kebab case video name');
 
+            $table->string('temp_filename_path')
+                ->nullable()
+                ->comment('The physical filename path, where a physical file is added, used to upload the video to Vimeo/Youtube/Backblaze');
+
+            $table->string('vimeo_id')
+                ->nullable()
+                ->comment('Vimeo video related id, when the video is uploaded to Vimeo');
+
             $table->unsignedInteger('duration')
                 ->nullable()
                 ->comment('Video duration, in seconds');
@@ -451,10 +459,6 @@ class CreateEdukaSchema extends Migration
             $table->boolean('is_free')
                 ->default(false)
                 ->comment('When a video is free it doesnt need to be accessible via a logged/paid in page');
-
-            $table->string('vimeo_id')
-                ->nullable()
-                ->comment('Vimeo video related id');
 
             $table->string('filename')
                 ->nullable()
