@@ -440,9 +440,9 @@ class CreateEdukaSchema extends Migration
                 ->nullable()
                 ->comment('The physical filename path, where a physical file is added, used to upload the video to Vimeo/Youtube/Backblaze');
 
-            $table->string('vimeo_id')
+            $table->string('vimeo_uri')
                 ->nullable()
-                ->comment('Vimeo video related id, when the video is uploaded to Vimeo');
+                ->comment('Vimeo uri path, when the video is uploaded to Vimeo');
 
             $table->unsignedInteger('duration')
                 ->nullable()
