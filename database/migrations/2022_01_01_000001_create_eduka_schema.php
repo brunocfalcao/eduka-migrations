@@ -394,7 +394,6 @@ class CreateEdukaSchema extends Migration
                 ->comment('The Vimeo folder ID, for folder renaming. Please refer to the Vimeo API reference');
 
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('videos', function (Blueprint $table) {
@@ -537,10 +536,12 @@ class CreateEdukaSchema extends Migration
             $table->id();
 
             $table->foreignId('chapter_id')
-                ->constrained();
+                ->constrained()
+                ->onDelete('cascade');
 
             $table->foreignId('variant_id')
-                ->constrained();
+                ->constrained()
+                ->onDelete('cascade');
 
             $table->unsignedInteger('index')
                 ->default(1);
