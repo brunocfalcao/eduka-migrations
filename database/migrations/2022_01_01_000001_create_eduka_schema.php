@@ -34,6 +34,9 @@ class CreateEdukaSchema extends Migration
             $table->string('name')
                 ->comment('Course marketing name');
 
+            $table->text('description')
+                ->comment('A more detailed description of this course, what is it about');
+
             $table->string('admin_name')
                 ->comment('The course admin user name (a.k.a. the instructor)');
 
