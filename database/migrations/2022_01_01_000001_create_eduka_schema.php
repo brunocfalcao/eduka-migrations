@@ -9,17 +9,17 @@ class CreateEdukaSchema extends Migration
 {
     public function up()
     {
-        Schema::create('organizations', function (Blueprint $table) {
+        Schema::create('backends', function (Blueprint $table) {
             $table->id();
 
             $table->string('name')
-                ->comment('Organization name. An organization aggregates courses');
+                ->comment('Backend name, it aggregates courses');
 
             $table->text('description')
                 ->nullable();
 
             $table->string('domain')
-                ->comment('The backend domain where users will log in');
+                ->comment('The backend domain where students will log in');
 
             $table->string('provider_namespace')
                 ->comment('Class for the backend management package');
@@ -85,9 +85,9 @@ class CreateEdukaSchema extends Migration
                 ->default(true)
                 ->comment('Defines if course is active and viewable. If active and launched_at in the future, then it is in prelaunch mode');
 
-            $table->foreignId('organization_id')
+            $table->foreignId('backend_id')
                 ->constrained()
-                ->comment('The related organization');
+                ->comment('The related backend');
 
             $table->unsignedInteger('progress')
                 ->default(0)
@@ -164,6 +164,8 @@ class CreateEdukaSchema extends Migration
                 ->after('email');
         });
 
+        Schema::rename('users', 'students');
+
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
 
@@ -183,13 +185,13 @@ class CreateEdukaSchema extends Migration
             $table->index(['id', 'course_id']);
         });
 
-        Schema::create('course_user', function (Blueprint $table) {
+        Schema::create('course_student', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('course_id')
                 ->constrained();
 
-            $table->foreignId('user_id')
+            $table->foreignId('student_id')
                 ->constrained();
 
             $table->timestamps();
@@ -247,10 +249,10 @@ class CreateEdukaSchema extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('user_variant', function (Blueprint $table) {
+        Schema::create('student_variant', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_id')
+            $table->foreignId('student_id')
                 ->constrained();
 
             $table->foreignId('variant_id')
@@ -263,7 +265,7 @@ class CreateEdukaSchema extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_id')
+            $table->foreignId('student_id')
                 ->nullable()
                 ->constrained();
 
@@ -299,10 +301,10 @@ class CreateEdukaSchema extends Migration
             $table->string('order_number')
                 ->nullable();
 
-            $table->string('user_name')
+            $table->string('student_name')
                 ->nullable();
 
-            $table->string('user_email')
+            $table->string('student_email')
                 ->nullable();
 
             $table->string('subtotal_usd')
@@ -529,7 +531,7 @@ class CreateEdukaSchema extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('user_video_seen', function (Blueprint $table) {
+        Schema::create('student_video_seen', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('video_id')
@@ -537,7 +539,7 @@ class CreateEdukaSchema extends Migration
                 ->nullable()
                 ->comment('Related video id');
 
-            $table->foreignId('user_id')
+            $table->foreignId('student_id')
                 ->constrained()
                 ->nullable()
                 ->comment('Related video id');
@@ -546,7 +548,7 @@ class CreateEdukaSchema extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('user_video_bookmarked', function (Blueprint $table) {
+        Schema::create('student_video_bookmarked', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('video_id')
@@ -554,7 +556,7 @@ class CreateEdukaSchema extends Migration
                 ->nullable()
                 ->comment('Related video id');
 
-            $table->foreignId('user_id')
+            $table->foreignId('student_id')
                 ->constrained()
                 ->nullable()
                 ->comment('Related video id');
@@ -571,7 +573,7 @@ class CreateEdukaSchema extends Migration
         Schema::create('request_logs', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_id')
+            $table->foreignId('student_id')
                 ->nullable();
 
             $table->string('referrer')
@@ -596,7 +598,7 @@ class CreateEdukaSchema extends Migration
             $table->longText('middleware')
                 ->nullable();
 
-            $table->foreignId('organization_id')
+            $table->foreignId('backend_id')
                 ->nullable();
 
             $table->foreignId('course_id')
