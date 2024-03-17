@@ -385,18 +385,18 @@ class CreateEdukaSchema extends Migration
             $table->timestamps();
         });
 
-        Schema::create('videos', function (Blueprint $table) {
+        Schema::create('episodes', function (Blueprint $table) {
             $table->id();
 
             $table->unsignedInteger('old_id')
                 ->nullable();
 
             $table->string('name')
-                ->comment('The title of the video');
+                ->comment('The title of the episode');
 
             $table->longText('description')
                 ->nullable()
-                ->comment('More information about this video');
+                ->comment('More information about this episode');
 
             $table->foreignId('course_id')
                 ->constrained();
@@ -406,43 +406,43 @@ class CreateEdukaSchema extends Migration
                 ->constrained();
 
             $table->unsignedInteger('index')
-                ->comment('The video index in the respective chapter');
+                ->comment('The episode index in the respective chapter');
 
             $table->uuid('uuid')
                 ->unique()
-                ->comment('The url uuid to direct link this video. Unique identifier');
+                ->comment('The url uuid to direct link this episode. Unique identifier');
 
             $table->string('canonical')
                 ->unique()
-                ->comment('The kebab case video name');
+                ->comment('The kebab case episode name');
 
             $table->string('temp_filename_path')
                 ->nullable()
-                ->comment('The physical filename path, where a physical file is added, used to upload the video to Vimeo/Youtube/Backblaze');
+                ->comment('The physical filename path, where a physical file is added, used to upload the episode to Vimeo/Youtube/Backblaze');
 
             $table->string('vimeo_uri')
                 ->nullable()
-                ->comment('Vimeo uri path, when the video is uploaded to Vimeo');
+                ->comment('Vimeo uri path, when the episode is uploaded to Vimeo');
 
             $table->unsignedInteger('duration')
                 ->nullable()
-                ->comment('Video duration, in seconds');
+                ->comment('Episode duration, in seconds');
 
             $table->boolean('is_visible')
                 ->default(false)
-                ->comment('If the video can be presented on screen (doesnt mean is clickable)');
+                ->comment('If the episode can be presented on screen (doesnt mean is clickable)');
 
             $table->boolean('is_active')
                 ->default(false)
-                ->comment('If when the video appears, it can be clickable, interactable, etc');
+                ->comment('If when the episode appears, it can be clickable, interactable, etc');
 
             $table->boolean('is_free')
                 ->default(false)
-                ->comment('When a video is free it doesnt need to be accessible via a logged/paid in page');
+                ->comment('When a episode is free it doesnt need to be accessible via a logged/paid in page');
 
             $table->string('filename')
                 ->nullable()
-                ->comment('Used only on the moment we are locally storing the video for uploads to external platforms (YouTube, Vimeo, Backblaze, etc)');
+                ->comment('Used only on the moment we are locally storing the episode for uploads to external platforms (YouTube, Vimeo, Backblaze, etc)');
 
             $table->timestamps();
             $table->softDeletes();
@@ -457,10 +457,10 @@ class CreateEdukaSchema extends Migration
             $table->string('url')
                 ->comment('The link url');
 
-            $table->foreignId('video_id')
+            $table->foreignId('episode_id')
                 ->constrained()
                 ->nullable()
-                ->comment('Related video id');
+                ->comment('Related episode id');
 
             $table->timestamps();
             $table->softDeletes();
@@ -484,13 +484,13 @@ class CreateEdukaSchema extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('series_video', function (Blueprint $table) {
+        Schema::create('series_episode', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('series_id')
                 ->constrained();
 
-            $table->foreignId('video_id')
+            $table->foreignId('episode_id')
                 ->constrained();
 
             $table->unsignedInteger('index')
@@ -500,10 +500,10 @@ class CreateEdukaSchema extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('tag_video', function (Blueprint $table) {
+        Schema::create('tag_episode', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('video_id')
+            $table->foreignId('episode_id')
                 ->constrained();
 
             $table->foreignId('tag_id')
@@ -531,35 +531,35 @@ class CreateEdukaSchema extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('student_video_seen', function (Blueprint $table) {
+        Schema::create('student_episode_seen', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('video_id')
+            $table->foreignId('episode_id')
                 ->constrained()
                 ->nullable()
-                ->comment('Related video id');
+                ->comment('Related episode id');
 
             $table->foreignId('student_id')
                 ->constrained()
                 ->nullable()
-                ->comment('Related video id');
+                ->comment('Related episode id');
 
             $table->timestamps();
             $table->softDeletes();
         });
 
-        Schema::create('student_video_bookmarked', function (Blueprint $table) {
+        Schema::create('student_episode_bookmarked', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('video_id')
+            $table->foreignId('episode_id')
                 ->constrained()
                 ->nullable()
-                ->comment('Related video id');
+                ->comment('Related episode id');
 
             $table->foreignId('student_id')
                 ->constrained()
                 ->nullable()
-                ->comment('Related video id');
+                ->comment('Related episode id');
 
             $table->timestamps();
             $table->softDeletes();
