@@ -32,20 +32,22 @@ class CreateEdukaSchema extends Migration
             $table->id();
 
             $table->string('name')
+                ->nullable()
                 ->comment('Course marketing name');
 
             $table->text('description')
+                ->nullable()
                 ->comment('A more detailed description of this course, what is it about');
 
-            $table->string('admin_name')
-                ->comment('The course admin user name (a.k.a. the instructor)');
+            $table->foreignId('student_admin_id')
+                ->nullable()
+                ->comment('Related student (user) admin acting as admin');
 
-            $table->string('admin_email')
-                ->comment('The course admin user email');
-
-            $table->uuid('uuid');
+            $table->uuid('uuid')
+                ->nullable();
 
             $table->string('canonical')
+                ->nullable()
                 ->unique();
 
             $table->string('twitter_handle')
@@ -62,6 +64,7 @@ class CreateEdukaSchema extends Migration
                 ->comment('SEO image for social integration');
 
             $table->string('domain')
+                ->nullable()
                 ->unique()
                 ->comment('The domain where this course is shown (e.g.: the course landing page)');
 
@@ -86,6 +89,7 @@ class CreateEdukaSchema extends Migration
                 ->comment('Defines if course is active and viewable. If active and launched_at in the future, then it is in prelaunch mode');
 
             $table->foreignId('backend_id')
+                ->nullable()
                 ->constrained()
                 ->comment('The related backend');
 
@@ -98,12 +102,15 @@ class CreateEdukaSchema extends Migration
                 ->comment('Does the course enables PPP capability');
 
             $table->string('lemon_squeezy_store_id')
+                ->nullable()
                 ->comment('The LS store id, even if they are multiple variants, they will all belong to the same store');
 
             $table->text('lemon_squeezy_api_key')
+                ->nullable()
                 ->comment('The LS api key, for checkout generation scope');
 
             $table->text('lemon_squeezy_hash_key')
+                ->nullable()
                 ->comment('The LS hash key, for webhook calls verification');
 
             $table->string('vimeo_uri')
@@ -113,10 +120,6 @@ class CreateEdukaSchema extends Migration
             $table->string('vimeo_folder_id')
                 ->nullable()
                 ->comment('The Vimeo folder ID, for folder renaming. Please refer to the Vimeo API reference');
-
-            $table->string('backblaze_bucket_name')
-                ->nullable()
-                ->comment('backblaze bucket id');
 
             $table->timestamps();
             $table->softDeletes();
@@ -155,8 +158,9 @@ class CreateEdukaSchema extends Migration
          * platforms to authenticate the user.
          */
         Schema::table('users', function (Blueprint $table) {
-            $table->text('email')
+            $table->string('email')
                 ->nullable()
+                ->unique()
                 ->after('name');
 
             $table->string('password')
