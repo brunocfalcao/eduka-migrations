@@ -109,7 +109,7 @@ class CreateEdukaSchema extends Migration
                 ->nullable()
                 ->comment('The LS api key, for checkout generation scope');
 
-            $table->text('lemon_squeezy_hash_key')
+            $table->text('lemon_squeezy_hash')
                 ->nullable()
                 ->comment('The LS hash key, for webhook calls verification');
 
@@ -122,7 +122,6 @@ class CreateEdukaSchema extends Migration
                 ->comment('The Vimeo folder ID, for folder renaming. Please refer to the Vimeo API reference');
 
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::table('users', function (Blueprint $table) {
