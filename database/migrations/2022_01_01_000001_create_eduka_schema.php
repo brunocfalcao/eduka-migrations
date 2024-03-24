@@ -25,7 +25,6 @@ class CreateEdukaSchema extends Migration
                 ->comment('Class for the backend management package');
 
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('courses', function (Blueprint $table) {
@@ -145,8 +144,6 @@ class CreateEdukaSchema extends Migration
             $table->timestamp('last_logged_in_at')
                 ->nullable()
                 ->after('previous_logged_in_at');
-
-            $table->softDeletes();
         });
 
         /**
@@ -183,7 +180,6 @@ class CreateEdukaSchema extends Migration
                 ->constrained();
 
             $table->timestamps();
-            $table->softDeletes();
 
             $table->index(['id', 'course_id']);
         });
@@ -212,7 +208,6 @@ class CreateEdukaSchema extends Migration
             $table->text('email');
 
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('variants', function (Blueprint $table) {
@@ -249,7 +244,6 @@ class CreateEdukaSchema extends Migration
                 ->comment('In case no variant is passed to the Eduka payments gateway, it will use the variant id from the default one here');
 
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('student_variant', function (Blueprint $table) {
@@ -262,7 +256,6 @@ class CreateEdukaSchema extends Migration
                 ->constrained();
 
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('orders', function (Blueprint $table) {
@@ -355,7 +348,6 @@ class CreateEdukaSchema extends Migration
                 ->nullable();
 
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('chapters', function (Blueprint $table) {
@@ -448,7 +440,6 @@ class CreateEdukaSchema extends Migration
                 ->comment('Used only on the moment we are locally storing the episode for uploads to external platforms (YouTube, Vimeo, Backblaze, etc)');
 
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('links', function (Blueprint $table) {
@@ -466,7 +457,6 @@ class CreateEdukaSchema extends Migration
                 ->comment('Related episode id');
 
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('series', function (Blueprint $table) {
@@ -484,7 +474,6 @@ class CreateEdukaSchema extends Migration
                 ->comment('Relatable course id');
 
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('series_episode', function (Blueprint $table) {
@@ -500,7 +489,6 @@ class CreateEdukaSchema extends Migration
                 ->default(1);
 
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('tag_episode', function (Blueprint $table) {
@@ -513,7 +501,6 @@ class CreateEdukaSchema extends Migration
                 ->constrained();
 
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('chapter_variant', function (Blueprint $table) {
@@ -531,7 +518,6 @@ class CreateEdukaSchema extends Migration
                 ->default(1);
 
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('student_episode_seen', function (Blueprint $table) {
@@ -548,7 +534,6 @@ class CreateEdukaSchema extends Migration
                 ->comment('Related episode id');
 
             $table->timestamps();
-            $table->softDeletes();
         });
 
         Schema::create('student_episode_bookmarked', function (Blueprint $table) {
@@ -565,7 +550,6 @@ class CreateEdukaSchema extends Migration
                 ->comment('Related episode id');
 
             $table->timestamps();
-            $table->softDeletes();
         });
 
         /**
