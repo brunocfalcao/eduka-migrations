@@ -560,6 +560,12 @@ class CreateEdukaSchema extends Migration
         Schema::create('request_logs', function (Blueprint $table) {
             $table->id();
 
+            $table->foreignId('backend_id')
+                ->nullable();
+
+            $table->foreignId('course_id')
+                ->nullable();
+
             $table->foreignId('student_id')
                 ->nullable();
 
@@ -583,12 +589,6 @@ class CreateEdukaSchema extends Migration
                 ->nullable();
 
             $table->longText('middleware')
-                ->nullable();
-
-            $table->foreignId('backend_id')
-                ->nullable();
-
-            $table->foreignId('course_id')
                 ->nullable();
 
             $table->timeStamps();
