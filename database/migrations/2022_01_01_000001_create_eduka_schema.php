@@ -476,7 +476,7 @@ class CreateEdukaSchema extends Migration
             $table->timestamps();
         });
 
-        Schema::create('series_episode', function (Blueprint $table) {
+        Schema::create('episode_series', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('series_id')
@@ -491,7 +491,7 @@ class CreateEdukaSchema extends Migration
             $table->timestamps();
         });
 
-        Schema::create('tag_episode', function (Blueprint $table) {
+        Schema::create('episode_tag', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('episode_id')
@@ -520,7 +520,7 @@ class CreateEdukaSchema extends Migration
             $table->timestamps();
         });
 
-        Schema::create('student_episode_seen', function (Blueprint $table) {
+        Schema::create('episode_student_seen', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('episode_id')
@@ -536,7 +536,7 @@ class CreateEdukaSchema extends Migration
             $table->timestamps();
         });
 
-        Schema::create('student_episode_bookmarked', function (Blueprint $table) {
+        Schema::create('episode_student_bookmarked', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('episode_id')
