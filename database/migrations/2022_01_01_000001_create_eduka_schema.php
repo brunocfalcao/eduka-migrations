@@ -58,9 +58,13 @@ class CreateEdukaSchema extends Migration
             $table->string('instagram_handle')
                 ->nullable();
 
-            $table->string('filename')
+            $table->string('filename_twitter')
                 ->nullable()
-                ->comment('SEO image for social integration');
+                ->comment('Twitter image (downloaded directly from twitter)');
+
+            $table->string('filename_logo')
+                ->nullable()
+                ->comment('Logo image for social integration');
 
             $table->string('domain')
                 ->nullable()
@@ -86,6 +90,10 @@ class CreateEdukaSchema extends Migration
             $table->boolean('is_active')
                 ->default(true)
                 ->comment('Defines if course is active and viewable. If active and launched_at in the future, then it is in prelaunch mode');
+
+            $table->string('clarity_code')
+                ->nullable()
+                ->comment('Microsoft clarity code for analytics');
 
             $table->foreignId('backend_id')
                 ->nullable()
