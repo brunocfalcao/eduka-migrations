@@ -52,12 +52,6 @@ class CreateEdukaSchema extends Migration
             $table->string('twitter_handle')
                 ->nullable();
 
-            $table->string('linkedin_url')
-                ->nullable();
-
-            $table->string('instagram_handle')
-                ->nullable();
-
             $table->string('filename_twitter')
                 ->nullable()
                 ->comment('Twitter image (downloaded directly from twitter)');
@@ -65,6 +59,10 @@ class CreateEdukaSchema extends Migration
             $table->string('filename_logo')
                 ->nullable()
                 ->comment('Logo image for social integration');
+
+            $table->string('theme_color')
+                ->default('#000000')
+                ->comment('Course primary theme color (used for theme coloring purposes, like newsletters, etc)');
 
             $table->string('domain')
                 ->nullable()
