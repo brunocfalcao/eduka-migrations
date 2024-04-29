@@ -56,9 +56,13 @@ class CreateEdukaSchema extends Migration
                 ->nullable()
                 ->comment('Twitter image (downloaded directly from twitter)');
 
-            $table->string('filename_logo')
+            $table->string('filename_email_logo')
                 ->nullable()
-                ->comment('Logo image for social integration');
+                ->comment('Logo image for emails');
+
+            $table->string('filename_main_logo')
+                ->nullable()
+                ->comment('Logo main image');
 
             $table->string('theme_color')
                 ->default('#000000')
