@@ -18,6 +18,10 @@ class CreateEdukaSchema extends Migration
             $table->text('description')
                 ->nullable();
 
+            $table->string('canonical')
+                ->nullable()
+                ->unique();
+
             $table->string('domain')
                 ->comment('The backend domain where students will log in');
 
