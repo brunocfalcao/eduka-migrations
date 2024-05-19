@@ -22,6 +22,10 @@ class CreateEdukaSchema extends Migration
                 ->nullable()
                 ->unique();
 
+            $table->string('clarity_code')
+                ->nullable()
+                ->comment('Microsoft clarity code for analytics');
+
             $table->string('domain')
                 ->comment('The backend domain where students will log in');
 
