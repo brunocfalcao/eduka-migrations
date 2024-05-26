@@ -22,6 +22,17 @@ class CreateEdukaSchema extends Migration
                 ->nullable()
                 ->unique();
 
+            $table->longText('theme')
+                ->nullable()
+                ->comment('JSON with all the colors, theme configurations, etc');
+
+            $table->string('twitter_handle')
+                ->nullable();
+
+            $table->string('filename_twitter')
+                ->nullable()
+                ->comment('Twitter image (downloaded directly from twitter)');
+
             $table->string('clarity_code')
                 ->nullable()
                 ->comment('Microsoft clarity code for analytics');
@@ -72,9 +83,9 @@ class CreateEdukaSchema extends Migration
                 ->nullable()
                 ->comment('Logo main image');
 
-            $table->string('theme_color')
-                ->default('#000000')
-                ->comment('Course primary theme color (used for theme coloring purposes, like newsletters, etc)');
+            $table->longText('theme')
+                ->nullable()
+                ->comment('JSON with all the colors, theme configurations, etc');
 
             $table->string('domain')
                 ->nullable()
