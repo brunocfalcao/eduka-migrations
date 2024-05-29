@@ -68,6 +68,10 @@ class CreateEdukaSchema extends Migration
                 ->nullable()
                 ->unique();
 
+            $table->unsignedInteger('pioneer_voucher_discount')
+                ->default(0)
+                ->comment('In case we want to offer a discount on the PIONEER discount voucher (to use on the launch date)');
+
             $table->string('twitter_handle')
                 ->nullable();
 
@@ -77,11 +81,7 @@ class CreateEdukaSchema extends Migration
 
             $table->string('filename_email_logo')
                 ->nullable()
-                ->comment('Logo image for emails');
-
-            $table->string('filename_main_logo')
-                ->nullable()
-                ->comment('Logo main image');
+                ->comment('Logo main image, used in emails mostly, on a white background. Preferably use a PNG/JPG with a white background');
 
             $table->longText('theme')
                 ->nullable()
