@@ -29,10 +29,6 @@ class CreateEdukaSchema extends Migration
             $table->string('twitter_handle')
                 ->nullable();
 
-            $table->string('filename_twitter')
-                ->nullable()
-                ->comment('Twitter image (downloaded directly from twitter)');
-
             $table->string('clarity_code')
                 ->nullable()
                 ->comment('Microsoft clarity code for analytics');
@@ -74,10 +70,6 @@ class CreateEdukaSchema extends Migration
 
             $table->string('twitter_handle')
                 ->nullable();
-
-            $table->string('filename_twitter')
-                ->nullable()
-                ->comment('Twitter image (downloaded directly from twitter)');
 
             $table->string('filename_email_logo')
                 ->nullable()
