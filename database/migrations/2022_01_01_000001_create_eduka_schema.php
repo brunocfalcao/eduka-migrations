@@ -36,7 +36,7 @@ class CreateEdukaSchema extends Migration
             $table->string('domain')
                 ->comment('The backend domain where students will log in');
 
-            $table->string('provider_namespace')
+            $table->string('service_provider_class')
                 ->comment('Class for the backend management package');
 
             $table->timestamps();
@@ -84,7 +84,11 @@ class CreateEdukaSchema extends Migration
                 ->unique()
                 ->comment('The domain where this course is shown (e.g.: the course landing page)');
 
-            $table->string('provider_namespace')
+            $table->string('payments_gateway_class')
+                ->nullable()
+                ->comment("Payments gateway class. Contained on EdukaPayments namespace. E.g.: EdukaPayments\PaymentProviders\Paddle\Paddle");
+
+            $table->string('service_provider_class')
                 ->nullable()
                 ->comment("Course provider namespace. E.g.: 'MasteringNova\\MasteringNovaServiceProvider'");
 
@@ -249,14 +253,15 @@ class CreateEdukaSchema extends Migration
                 ->constrained()
                 ->comment('Related course');
 
+            $table->string('product_id')
+                ->nullable()
+                ->comment('If the payments gateway is Paddle, then it is the product id. If the payments gateway is Lemon Squeezy then it is the variant id');
+
             $table->longText('lemon_squeezy_data')
                 ->nullable()
                 ->comment('Related Lemon Squeezy repository data');
 
-            $table->string('lemon_squeezy_variant_id')
-                ->nullable();
-
-            $table->decimal('lemon_squeezy_price_override', 10, 2)
+            $table->decimal('price_override', 10, 2)
                 ->nullable()
                 ->comment('In case we would like to override the variant lemonsqueezy default price');
 
@@ -354,7 +359,7 @@ class CreateEdukaSchema extends Migration
             $table->string('lemon_squeezy_product_id')
                 ->nullable();
 
-            $table->string('lemon_squeezy_variant_id')
+            $table->string('product_id')
                 ->nullable();
 
             $table->string('lemon_squeezy_product_name')
@@ -616,7 +621,7 @@ class CreateEdukaSchema extends Migration
         });
 
         // Run initial framework schema seeder.
-        $seeder = new InitialSchemaSeeder();
+        $seeder = new InitialSchemaSeeder;
         $seeder->run();
     }
 
