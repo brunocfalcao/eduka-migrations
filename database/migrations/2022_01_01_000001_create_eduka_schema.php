@@ -426,6 +426,10 @@ class CreateEdukaSchema extends Migration
                 ->nullable()
                 ->constrained();
 
+            $table->string('difficulty_canonical')
+                  ->default('easy')
+                  ->comment('Difficulty like, easy, intermediate, advanced, etc');
+
             $table->unsignedInteger('index')
                 ->comment('The episode index in the respective chapter');
 
