@@ -71,7 +71,7 @@ class CreateEdukaSchema extends Migration
             $table->string('twitter_handle')
                 ->nullable();
 
-            $table->string('filename_email_logo')
+            $table->string('filename_logo')
                 ->nullable()
                 ->comment('Logo main image, used in emails mostly, on a white background. Preferably use a PNG/JPG with a white background');
 
@@ -427,8 +427,8 @@ class CreateEdukaSchema extends Migration
                 ->constrained();
 
             $table->string('difficulty_canonical')
-                  ->default('easy')
-                  ->comment('Difficulty like, easy, intermediate, advanced, etc');
+                ->default('easy')
+                ->comment('Difficulty like, easy, intermediate, advanced, etc');
 
             $table->unsignedInteger('index')
                 ->comment('The episode index in the respective chapter');
