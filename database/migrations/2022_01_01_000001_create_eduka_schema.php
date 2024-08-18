@@ -71,10 +71,6 @@ class CreateEdukaSchema extends Migration
             $table->string('twitter_handle')
                 ->nullable();
 
-            $table->string('filename_logo')
-                ->nullable()
-                ->comment('Logo main image, used in emails mostly, on a white background. Preferably use a PNG/JPG with a white background');
-
             $table->longText('theme')
                 ->nullable()
                 ->comment('JSON with all the colors, theme configurations, etc');
@@ -391,9 +387,6 @@ class CreateEdukaSchema extends Migration
             $table->longText('description')
                 ->nullable()
                 ->comment('Some extra details about this chapter subject');
-
-            $table->string('filename')
-                ->nullable();
 
             $table->string('vimeo_uri')
                 ->nullable()
