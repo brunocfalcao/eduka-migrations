@@ -378,6 +378,10 @@ class CreateEdukaSchema extends Migration
             $table->foreignId('course_id')
                 ->constrained();
 
+            $table->uuid('uuid')
+                ->unique()
+                ->comment('The url uuid to direct link this episode. Unique identifier');
+
             $table->string('name')
                 ->comment('The chapter name');
 
